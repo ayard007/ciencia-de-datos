@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Optativa III: Ciencia de Datos — Guía interactiva | UNE Plantel Centro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#1e2a6b; --azul-800:#18225a; --azul-900:#111a45;
+  --rojo:#e2231a; --rojo-700:#c01810;
+  --papel:#f5f3ec; --papel-2:#ece8dc; --tinta:#1a1c22; --tinta-suave:#4a4d57;
+  --linea:#d8d3c4; --blanco:#ffffff;
+  --ok:#1f7a4d; --acento:#e8a200;
+  --sombra:0 1px 2px rgba(17,26,69,.06),0 8px 30px rgba(17,26,69,.08);
+  --radio:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif;color:var(--tinta);
+  background:var(--papel);
+  background-image:linear-gradient(var(--linea) 1px,transparent 1px),linear-gradient(90deg,var(--linea) 1px,transparent 1px);
+  background-size:100% 3.5rem, 3.5rem 100%;
+  background-position:0 -1px;
+  line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:var(--azul);text-decoration:none}
+a:hover{text-decoration:underline}
+code,kbd,.mono{font-family:'JetBrains Mono',monospace}
+
+/* Layout */
+.wrap{display:grid;grid-template-columns:290px 1fr;max-width:1400px;margin:0 auto;gap:0}
+.side{
+  position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;
+  background:var(--azul-900);color:#dfe3f2;padding:0;
+  border-right:3px solid var(--rojo);
+}
+.main{min-width:0;padding:0}
+
+/* Sidebar */
+.brand{padding:1.6rem 1.4rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.1);position:sticky;top:0;background:var(--azul-900);z-index:2}
+.brand img{width:96px;margin-bottom:.8rem;background:#fff;padding:.5rem .7rem;border-radius:10px}
+.brand .mat{font-family:'Fraunces',serif;font-weight:900;font-size:1.05rem;color:#fff;line-height:1.15;letter-spacing:-.01em}
+.brand .sub{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#8b93c4;margin-top:.35rem}
+nav.toc{padding:1rem .8rem 3rem}
+nav.toc .grp{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:#7f88bd;margin:1.3rem .6rem .5rem}
+nav.toc a{display:block;color:#c7ccea;padding:.42rem .7rem;border-radius:8px;font-size:.9rem;font-weight:500;border-left:2px solid transparent}
+nav.toc a:hover{background:rgba(255,255,255,.06);text-decoration:none;color:#fff}
+nav.toc a.on{background:var(--rojo);color:#fff;border-left-color:#fff}
+nav.toc a .n{font-family:'JetBrains Mono',monospace;font-size:.72rem;opacity:.7;margin-right:.5rem}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;background:var(--azul);color:#fff;padding:3.5rem 3rem 3rem;border-bottom:4px solid var(--rojo)}
+.hero::before{content:"";position:absolute;inset:0;opacity:.14;
+  background-image:radial-gradient(circle at 1px 1px,#fff 1.2px,transparent 0);background-size:22px 22px}
+.hero .kick{position:relative;font-family:'JetBrains Mono',monospace;font-size:.78rem;letter-spacing:.28em;text-transform:uppercase;color:#f3b6b2}
+.hero h1{position:relative;font-family:'Fraunces',serif;font-weight:900;font-size:clamp(2rem,4.6vw,3.4rem);line-height:1.02;letter-spacing:-.02em;margin:.7rem 0 .8rem;max-width:20ch}
+.hero p{position:relative;max-width:60ch;color:#d5d9f0;font-size:1.05rem}
+.hero .meta{position:relative;display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.6rem}
+.hero .meta span{font-family:'JetBrains Mono',monospace;font-size:.76rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:.4rem .7rem;border-radius:999px}
+
+/* Content sections */
+.section{padding:3rem 3rem;border-bottom:1px solid var(--linea);scroll-margin-top:1rem}
+.section-intro{background:var(--papel-2)}
+.eyebrow{display:inline-flex;align-items:center;gap:.6rem;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--rojo-700);font-weight:700;margin-bottom:.7rem}
+.eyebrow::before{content:"";width:26px;height:2px;background:var(--rojo)}
+h2.sec{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(1.6rem,3vw,2.3rem);letter-spacing:-.02em;line-height:1.08;margin-bottom:.4rem}
+h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.35rem;margin:2rem 0 .7rem;color:var(--azul-900)}
+h4{font-size:1.05rem;font-weight:700;margin:1.4rem 0 .5rem;color:var(--azul-800)}
+.section p{margin:.7rem 0;max-width:75ch}
+.section ul,.section ol{margin:.7rem 0 .7rem 1.3rem;max-width:75ch}
+.section li{margin:.35rem 0}
+.lead{font-size:1.12rem;color:var(--tinta-suave)}
+
+/* Cards / blocks */
+.card{background:var(--blanco);border:1px solid var(--linea);border-radius:var(--radio);padding:1.5rem 1.6rem;box-shadow:var(--sombra);margin:1.2rem 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.sesion{background:var(--blanco);border:1px solid var(--linea);border-left:4px solid var(--azul);border-radius:12px;padding:1.3rem 1.4rem;margin:1rem 0}
+.sesion .tag{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--azul);font-weight:700}
+.sesion h4{margin-top:.3rem}
+
+.prev{border-left:4px solid var(--acento);background:#fdf8ea}
+.prev .q{font-weight:600;color:var(--azul-900)}
+details.reveal{margin-top:.6rem}
+details.reveal summary{cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--rojo-700);font-weight:700;list-style:none}
+details.reveal summary::-webkit-details-marker{display:none}
+details.reveal summary::before{content:"▸ ";}
+details.reveal[open] summary::before{content:"▾ "}
+
+.recurso{display:flex;gap:.8rem;align-items:flex-start;padding:.7rem 0;border-bottom:1px dashed var(--linea)}
+.recurso:last-child{border-bottom:none}
+.recurso .tipo{flex:0 0 auto;font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;background:var(--azul);color:#fff;padding:.2rem .5rem;border-radius:5px;margin-top:.15rem}
+
+/* Activity blocks */
+.act{border:1px solid var(--linea);border-radius:var(--radio);margin:1.4rem 0;overflow:hidden;background:var(--blanco);box-shadow:var(--sombra)}
+.act > .head{display:flex;align-items:center;gap:.9rem;padding:1rem 1.4rem;background:var(--azul);color:#fff}
+.act > .head .num{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:1.1rem;background:var(--rojo);width:2rem;height:2rem;display:grid;place-items:center;border-radius:8px;flex:0 0 auto}
+.act > .head .ti{font-weight:700;font-size:1.05rem}
+.act > .head .ti small{display:block;font-weight:500;font-size:.74rem;opacity:.8;text-transform:uppercase;letter-spacing:.12em;font-family:'JetBrains Mono',monospace}
+.act > .body{padding:1.3rem 1.4rem}
+.classroom{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ok);border:1px solid var(--ok);border-radius:6px;padding:.15rem .5rem;margin-bottom:.6rem}
+ol.pasos{counter-reset:p;list-style:none;margin-left:0}
+ol.pasos li{counter-increment:p;position:relative;padding:.55rem 0 .55rem 2.6rem;border-bottom:1px dashed var(--linea)}
+ol.pasos li:last-child{border-bottom:none}
+ol.pasos li::before{content:counter(p);position:absolute;left:0;top:.5rem;width:1.7rem;height:1.7rem;background:var(--papel-2);border:1px solid var(--linea);color:var(--azul);font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.8rem;display:grid;place-items:center;border-radius:50%}
+
+pre{background:var(--azul-900);color:#e7ebfb;border-radius:10px;padding:1.1rem 1.2rem;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:.82rem;line-height:1.55;margin:.9rem 0;border:1px solid #0c1234}
+pre .c{color:#8ea0d8}
+pre .k{color:#ff9d8a}
+pre .s{color:#a9e5c0}
+:not(pre)>code{background:var(--papel-2);border:1px solid var(--linea);border-radius:5px;padding:.08em .4em;font-size:.86em;color:var(--azul-900)}
+
+.caso{border-left:4px solid var(--rojo);background:#fdf2f1}
+.pregunta-caso{background:var(--blanco);border:1px solid var(--linea);border-radius:10px;padding:.9rem 1.1rem;margin:.7rem 0}
+.pregunta-caso b{color:var(--azul-900)}
+
+/* Quiz */
+.quiz{background:var(--azul-900);color:#eef1fb;border-radius:var(--radio);padding:1.6rem 1.6rem 1.4rem;margin:1.4rem 0}
+.quiz h4{color:#fff;margin-top:0}
+.q-item{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:1rem 1.1rem;margin:.9rem 0}
+.q-item .qt{font-weight:600;margin-bottom:.6rem}
+.q-item label{display:block;padding:.45rem .7rem;border-radius:8px;cursor:pointer;border:1px solid transparent;transition:.15s;font-size:.94rem}
+.q-item label:hover{background:rgba(255,255,255,.08)}
+.q-item input{margin-right:.6rem;accent-color:var(--rojo)}
+.q-item label.correct{background:rgba(31,122,77,.25);border-color:var(--ok)}
+.q-item label.wrong{background:rgba(226,35,26,.22);border-color:var(--rojo)}
+.quiz .btn{margin-top:.4rem}
+.btn{display:inline-block;background:var(--rojo);color:#fff;font-weight:700;font-family:'Inter';border:none;border-radius:9px;padding:.7rem 1.4rem;cursor:pointer;font-size:.95rem}
+.btn:hover{background:var(--rojo-700)}
+.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.35);color:#fff}
+.score{margin-top:1rem;font-family:'JetBrains Mono',monospace;font-size:1.1rem;font-weight:700;display:none;padding:.9rem 1.1rem;border-radius:10px;background:rgba(255,255,255,.1)}
+.score.show{display:block}
+
+.reflex{background:linear-gradient(135deg,var(--azul),var(--azul-900));color:#fff;border:none}
+.reflex h3{color:#fff}
+.reflex textarea{width:100%;min-height:90px;border-radius:10px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.07);color:#fff;padding:.8rem;font-family:'Inter';font-size:.95rem;resize:vertical;margin:.3rem 0 1rem}
+.reflex textarea::placeholder{color:#aab2dd}
+.reflex label{font-weight:600;display:block;margin-bottom:.3rem}
+
+footer{background:var(--azul-900);color:#aeb6dd;padding:2.4rem 3rem;font-size:.86rem}
+footer strong{color:#fff}
+footer img{width:70px;background:#fff;border-radius:8px;padding:.4rem .5rem;margin-bottom:.8rem}
+
+.top{position:fixed;right:1.2rem;bottom:1.2rem;background:var(--azul);color:#fff;width:2.8rem;height:2.8rem;border-radius:50%;display:grid;place-items:center;box-shadow:var(--sombra);font-size:1.2rem;z-index:20;opacity:0;pointer-events:none;transition:.2s}
+.top.show{opacity:1;pointer-events:auto}
+.menu-btn{display:none}
+
+@media(max-width:900px){
+  .wrap{grid-template-columns:1fr}
+  .side{position:fixed;left:0;top:0;width:280px;z-index:50;transform:translateX(-100%);transition:.25s;box-shadow:0 0 40px rgba(0,0,0,.4)}
+  .side.open{transform:none}
+  .menu-btn{display:grid;place-items:center;position:fixed;top:1rem;left:1rem;z-index:60;width:2.9rem;height:2.9rem;background:var(--azul);color:#fff;border:none;border-radius:10px;font-size:1.3rem;box-shadow:var(--sombra)}
+  .hero,.section,footer{padding-left:1.3rem;padding-right:1.3rem}
+  .grid2{grid-template-columns:1fr}
+  .hero{padding-top:4.5rem}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto;transition:none!important}}
+</style>
+</head>
+<body>
+<button class="menu-btn" onclick="document.querySelector('.side').classList.toggle('open')" aria-label="Menú">☰</button>
+<div class="wrap">
+<aside class="side">
+  <div class="brand">
+    <img src="data:image/png;base64,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flrOlIvlVxIvfT/Q8L9DbpR4efnHco7Ep/GPlUNkb4lXDDaQZl8+J4T0O67/Z2eLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAABacu8//T+wJF0i54bpgwAAAABJRU5ErkJggg==" alt="Universidad de Especialidades UNE">
+    <div class="mat">Optativa III:<br>Ciencia de Datos</div>
+    <div class="sub">UNE · Plantel Centro</div>
+  </div>
+  <nav class="toc" id="toc">
+    <div class="grp">Inicio</div>
+    <a href="#portada"><span class="n">00</span>Presentación</a>
+    <a href="#uso"><span class="n">·</span>Cómo usar la guía</a>
+    <div class="grp">Semana 1</div>
+    <a href="#s1"><span class="n">01</span>Introducción y KDD</a>
+    <div class="grp">Semana 2</div>
+    <a href="#s2"><span class="n">02</span>Estadística y probabilidad I</a>
+    <div class="grp">Semana 3</div>
+    <a href="#s3"><span class="n">03</span>Estadística y probabilidad II</a>
+    <div class="grp">Cierre</div>
+    <a href="#reflexion"><span class="n">04</span>Reflexión y aplicación</a>
+  </nav>
+</aside>
+<main class="main">
+<section class="hero" id="portada">
+  <div class="kick">Ingeniería en Computación · 9.º Semestre</div>
+  <h1>Guía interactiva del curso-taller de Ciencia de Datos</h1>
+  <p>Un minicurso construido con metodología constructivista, pedagogía activa y aprendizaje basado en problemas. Cada semana te acompaña desde el fundamento conceptual hasta la implementación real en Python, lista para aplicarse en tus proyectos universitarios.</p>
+  <div class="meta">
+    <span>56 horas · 4 h/semana</span>
+    <span>Semanas 1 a 3</span>
+    <span>Python · VS Code</span>
+    <span>Entregas en Classroom</span>
+  </div>
+</section>
+
+<section class="section section-intro" id="uso">
+  <div class="eyebrow">Orientación</div>
+  <h2 class="sec">Cómo trabajar con esta guía</h2>
+  <p class="lead">Esta guía no es un texto para leer de forma pasiva. Está diseñada para que construyas conocimiento haciendo: cada semana plantea un problema, te da herramientas conceptuales y te reta a producir algo funcional que puedas defender.</p>
+  <div class="grid2">
+    <div class="card">
+      <h4>Estructura de cada semana</h4>
+      <ol>
+        <li>Introducción y pregunta de conocimiento previo</li>
+        <li>Contenido temático por sesión</li>
+        <li>Materiales externos de consulta formal</li>
+        <li>Cuatro actividades prácticas para Classroom</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h4>Las cuatro actividades entregables</h4>
+      <ol>
+        <li><b>Foro de mediación:</b> reflexión crítica e intercambio de ideas.</li>
+        <li><b>Práctica en Python:</b> paso a paso en VS Code.</li>
+        <li><b>Caso práctico:</b> análisis y respuesta argumentada.</li>
+        <li><b>Quiz:</b> cinco preguntas con puntaje automático.</li>
+      </ol>
+    </div>
+  </div>
+  <div class="card" style="border-left:4px solid var(--ok)">
+    <h4>Requisito técnico único</h4>
+    <p>Necesitas <b>Visual Studio Code</b>, <b>Python 3.10 o superior</b> y una cuenta de <b>GitHub</b>. En la Semana 1 se detalla la instalación completa. Todas las prácticas usan software libre.</p>
+  </div>
+</section>
+<section class="section" id="s1">
+  <div class="eyebrow">Semana 1</div>
+  <h2 class="sec">Introducción a la Ciencia de Datos y al ecosistema KDD</h2>
+  <p class="lead">Toda disciplina técnica empieza por un mapa. Antes de programar un solo modelo, un ingeniero de computación necesita entender qué territorio pisa: qué es la ciencia de datos, quién hace qué, y cómo un conjunto de datos crudos se convierte en conocimiento accionable.</p>
+
+  <h3>Introducción</h3>
+  <p>La ciencia de datos es la disciplina que combina estadística, programación y conocimiento del dominio para extraer conocimiento útil a partir de datos. No es una moda ni una sola herramienta: es un proceso con etapas, roles especializados y decisiones de ingeniería. En esta semana ubicarás las cuatro grandes áreas del curso —minería de datos, ingeniería de datos, Big Data y ciencia de datos aplicada— y aprenderás a distinguir el proceso <b>KDD</b> del ciclo <b>CRISP-DM</b>, dos marcos que estructuran cualquier proyecto serio. Además, montarás tu entorno de trabajo profesional, el mismo que usarás durante todo el semestre.</p>
+
+  <div class="card prev">
+    <div class="eyebrow" style="color:var(--acento)">Conocimiento previo</div>
+    <p class="q">Antes de continuar, responde mentalmente: si tuvieras una hoja de cálculo con 500 000 registros de ventas, ¿qué pasos seguirías para responder la pregunta "¿qué productos conviene promocionar el próximo trimestre?" Enumera al menos tres pasos.</p>
+    <details class="reveal">
+      <summary>Ver una pista para contrastar tu respuesta</summary>
+      <p style="margin-top:.6rem">Tu lista probablemente incluye: limpiar los datos, explorarlos, buscar patrones y sacar una conclusión. Justamente esa secuencia intuitiva es la base del proceso KDD que formalizarás esta semana. Guarda tu respuesta: la retomarás en el foro.</p>
+    </details>
+  </div>
+
+  <h3>Contenido temático</h3>
+
+  <div class="sesion">
+    <div class="tag">Sesión 1 · 2 horas</div>
+    <h4>Panorama y fundamentos</h4>
+    <p>La ciencia de datos se apoya en tres pilares: matemáticas y estadística, informática, y conocimiento del dominio del problema. De la intersección de estos pilares surgen los <b>roles profesionales</b>:</p>
+    <ul>
+      <li><b>Data Scientist:</b> formula hipótesis, construye y evalúa modelos, comunica hallazgos. Vive en la intersección de estadística y negocio.</li>
+      <li><b>Data Engineer:</b> diseña y mantiene la infraestructura que mueve y almacena los datos (pipelines, bases de datos, orquestación). Garantiza que los datos lleguen limpios y a tiempo.</li>
+      <li><b>ML Engineer:</b> lleva los modelos a producción, los optimiza y los mantiene operando de forma confiable y escalable.</li>
+    </ul>
+    <p>El <b>proceso KDD (Knowledge Discovery in Databases)</b> describe cinco etapas para transformar datos en conocimiento: <b>selección</b> de datos, <b>preprocesamiento</b> (limpieza), <b>transformación</b>, <b>minería de datos</b> (aplicación de algoritmos) e <b>interpretación y evaluación</b>. La minería de datos es solo una etapa dentro de KDD, no un sinónimo.</p>
+    <p>El ciclo <b>CRISP-DM (Cross-Industry Standard Process for Data Mining)</b> es el marco más usado en la industria y consta de seis fases iterativas: comprensión del negocio, comprensión de los datos, preparación de los datos, modelado, evaluación y despliegue. A diferencia de KDD, CRISP-DM parte del problema de negocio y es explícitamente cíclico.</p>
+    <h4>Diferencias que debes tener claras</h4>
+    <ul>
+      <li><b>Minería de datos / KDD:</b> descubrir patrones y relaciones ocultas en los datos.</li>
+      <li><b>Ingeniería de datos:</b> construir la infraestructura y los flujos que hacen posible el análisis.</li>
+      <li><b>Big Data:</b> tecnologías y técnicas para manejar datos que exceden la capacidad de una sola máquina (las cinco V: volumen, velocidad, variedad, veracidad, valor).</li>
+      <li><b>Ciencia de datos aplicada:</b> uso integrado de todo lo anterior para resolver problemas concretos de un dominio.</li>
+    </ul>
+    <div class="card" style="margin-top:1rem;border-left:4px solid var(--azul)">
+      <b>Actividad en clase:</b> en equipos, elaboren un mapa conceptual comparativo de las cuatro áreas del curso. El mapa debe mostrar qué las distingue, dónde se solapan y un ejemplo real de cada una.
+    </div>
+  </div>
+
+  <div class="sesion">
+    <div class="tag">Sesión 2 · 2 horas</div>
+    <h4>Entorno de trabajo</h4>
+    <p>Un flujo de trabajo reproducible es tan importante como el análisis mismo. Configurarás las herramientas estándar de la industria:</p>
+    <ul>
+      <li><b>Python:</b> el lenguaje de referencia en ciencia de datos por su ecosistema de librerías.</li>
+      <li><b>Anaconda / Jupyter:</b> distribución que empaqueta Python y sus librerías científicas; Jupyter permite mezclar código, resultados y explicaciones en un mismo documento (notebook).</li>
+      <li><b>Entornos virtuales:</b> aíslan las dependencias de cada proyecto para evitar conflictos de versiones.</li>
+      <li><b>Git:</b> control de versiones para registrar la historia de tu trabajo y compartirlo en GitHub.</li>
+    </ul>
+    <h4>Librerías base</h4>
+    <ul>
+      <li><b>NumPy:</b> arreglos numéricos y operaciones vectorizadas de alto rendimiento.</li>
+      <li><b>pandas:</b> estructuras tabulares (DataFrame) para manipular datos como si fueran hojas de cálculo programables.</li>
+      <li><b>matplotlib:</b> generación de gráficos y visualizaciones.</li>
+    </ul>
+    <div class="card" style="margin-top:1rem;border-left:4px solid var(--azul)">
+      <b>Actividad en clase:</b> creen un notebook "hola mundo" que cargue un dataset y realice una exploración inicial (dimensiones, primeras filas, tipos de datos y un gráfico simple).
+    </div>
+  </div>
+
+  <h3>Materiales externos de consulta</h3>
+  <div class="card">
+    <div class="recurso"><span class="tipo">Libro</span><div>Han, J., Kamber, M. y Pei, J. <i>Data Mining: Concepts and Techniques</i> (3.ª ed.), Morgan Kaufmann. Capítulo 1: introducción al proceso KDD.</div></div>
+    <div class="recurso"><span class="tipo">Estándar</span><div>Documentación del modelo <i>CRISP-DM 1.0</i> (Chapman et al., 2000). Guía metodológica original del ciclo de minería de datos.</div></div>
+    <div class="recurso"><span class="tipo">Docs</span><div>Documentación oficial de <a href="https://pandas.pydata.org/docs/" target="_blank" rel="noopener">pandas</a>, <a href="https://numpy.org/doc/" target="_blank" rel="noopener">NumPy</a> y <a href="https://matplotlib.org/stable/" target="_blank" rel="noopener">matplotlib</a>.</div></div>
+    <div class="recurso"><span class="tipo">Datos</span><div>Repositorios de datasets: <a href="https://archive.ics.uci.edu/" target="_blank" rel="noopener">UCI Machine Learning Repository</a> y <a href="https://www.kaggle.com/datasets" target="_blank" rel="noopener">Kaggle Datasets</a>.</div></div>
+    <div class="recurso"><span class="tipo">Guía</span><div>Documentación oficial de <a href="https://git-scm.com/doc" target="_blank" rel="noopener">Git</a> y guía de inicio de <a href="https://docs.github.com/es/get-started" target="_blank" rel="noopener">GitHub</a>.</div></div>
+  </div>
+
+  <h3>Actividades para entregar en Classroom</h3>
+
+  <!-- ACT 1 FORO -->
+  <div class="act">
+    <div class="head"><span class="num">1</span><span class="ti">Foro de mediación<small>Reflexión crítica</small></span></div>
+    <div class="body">
+      <span class="classroom">Entrega en Classroom · Foro</span>
+      <p><b>Pregunta detonadora:</b> "Si la minería de datos es solo una etapa dentro del proceso KDD, ¿por qué crees que en la conversación pública y en los medios se usan como sinónimos los términos 'inteligencia artificial', 'Big Data', 'ciencia de datos' y 'minería de datos'? ¿Qué consecuencias tiene esta confusión para un ingeniero que debe planear un proyecto real?"</p>
+      <h4>Instrucciones paso a paso</h4>
+      <ol class="pasos">
+        <li>Publica una respuesta inicial de 150 a 250 palabras que tome una postura argumentada, no una definición copiada.</li>
+        <li>Apóyate en al menos un material de consulta de la semana y cítalo.</li>
+        <li>Conecta tu respuesta con la lista de pasos que escribiste en la sección de conocimiento previo.</li>
+        <li>Responde de forma crítica y respetuosa a por lo menos dos compañeros, aportando un ejemplo o una objeción, no un simple "estoy de acuerdo".</li>
+      </ol>
+      <p><b>Ejemplo de apertura:</b> "Considero que la confusión surge porque los cuatro términos comparten el objetivo de obtener valor de los datos; sin embargo, mezclarlos lleva a subestimar la etapa de preparación, que en mi experiencia con..."</p>
+    </div>
+  </div>
+
+  <!-- ACT 2 PYTHON -->
+  <div class="act">
+    <div class="head"><span class="num">2</span><span class="ti">Práctica en Python<small>Aprendizaje aplicado en VS Code</small></span></div>
+    <div class="body">
+      <span class="classroom">Entrega en Classroom · Enlace a GitHub + notebook</span>
+      <p><b>Meta integral:</b> montar tu entorno profesional, crear tu repositorio del curso y producir un notebook que cargue y explore un dataset de tu interés. Este es el cimiento de todas las prácticas del semestre.</p>
+      <h4>Instrucciones paso a paso</h4>
+      <ol class="pasos">
+        <li>Instala <b>Python 3.10+</b> desde python.org y <b>Visual Studio Code</b>. En VS Code instala las extensiones <i>Python</i> y <i>Jupyter</i>.</li>
+        <li>Abre la terminal integrada de VS Code y crea un entorno virtual dentro de tu carpeta de proyecto.</li>
+        <li>Activa el entorno e instala las librerías base.</li>
+        <li>Elige un dataset de UCI o Kaggle que te resulte relevante (deportes, música, salud, videojuegos, etc.) y descárgalo en formato CSV.</li>
+        <li>Crea un notebook <code>semana01_exploracion.ipynb</code> y ejecuta el código de exploración inicial.</li>
+        <li>Inicializa Git, crea un repositorio en GitHub llamado <code>optativa3-ciencia-datos</code> y sube tu notebook.</li>
+      </ol>
+      <h4>Comandos de terminal</h4>
+      <pre><span class="c"># 1) Crear y activar entorno virtual (Windows)</span>
+python -m venv .venv
+.venv\Scripts\activate
+
+<span class="c"># En macOS o Linux:  source .venv/bin/activate</span>
+
+<span class="c"># 2) Instalar librerías base</span>
+pip install numpy pandas matplotlib jupyter
+
+<span class="c"># 3) Registrar el proyecto en Git</span>
+git init
+git add .
+git commit -m <span class="s">"Semana 1: entorno y exploracion inicial"</span>
+git branch -M main
+git remote add origin https://github.com/TU_USUARIO/optativa3-ciencia-datos.git
+git push -u origin main</pre>
+      <h4>Código del notebook</h4>
+      <pre><span class="k">import</span> pandas <span class="k">as</span> pd
+<span class="k">import</span> matplotlib.pyplot <span class="k">as</span> plt
+
+<span class="c"># Carga del dataset elegido (ajusta el nombre del archivo)</span>
+df = pd.read_csv(<span class="s">"mi_dataset.csv"</span>)
+
+<span class="c"># Exploracion inicial</span>
+print(<span class="s">"Dimensiones (filas, columnas):"</span>, df.shape)
+print(<span class="s">"\nPrimeras filas:"</span>)
+print(df.head())
+
+print(<span class="s">"\nTipos de datos:"</span>)
+print(df.dtypes)
+
+print(<span class="s">"\nResumen estadistico:"</span>)
+print(df.describe())
+
+<span class="c"># Primer grafico: distribucion de una columna numerica</span>
+columna = df.select_dtypes(<span class="s">"number"</span>).columns[<span class="s">0</span>]
+df[columna].hist(bins=<span class="s">20</span>)
+plt.title(<span class="s">f"Distribucion de {columna}"</span>)
+plt.xlabel(columna); plt.ylabel(<span class="s">"Frecuencia"</span>)
+plt.tight_layout()
+plt.savefig(<span class="s">"distribucion.png"</span>)
+plt.show()</pre>
+      <h4>Criterios de entrega</h4>
+      <ul>
+        <li>Enlace público a tu repositorio de GitHub.</li>
+        <li>El notebook debe incluir una celda de texto (Markdown) describiendo el dataset: origen, número de registros, variables y por qué lo elegiste.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ACT 3 CASO -->
+  <div class="act">
+    <div class="head"><span class="num">3</span><span class="ti">Caso práctico<small>Análisis y argumentación</small></span></div>
+    <div class="body caso" style="border-radius:0 0 14px 14px;margin:0;padding:1.3rem 1.4rem">
+      <span class="classroom">Entrega en Classroom · Documento breve</span>
+      <p><b>Situación:</b> una cadena de tiendas de conveniencia contrata a tu equipo. Tiene registrados tres años de tickets de venta, pero los datos están dispersos en archivos de cada sucursal, con formatos distintos, columnas faltantes y fechas inconsistentes. La dirección quiere "que la inteligencia artificial le diga qué va a vender el próximo mes".</p>
+      <p>Analiza el caso a la luz del proceso KDD y del ciclo CRISP-DM, y responde por escrito:</p>
+      <div class="pregunta-caso"><b>a)</b> Ubica el problema en la fase inicial de CRISP-DM. ¿Cuál es realmente el problema de negocio y por qué la petición literal de la dirección es imprecisa?</div>
+      <div class="pregunta-caso"><b>b)</b> Según KDD, ¿en qué etapa se invertirá probablemente la mayor parte del esfuerzo con estos datos y por qué?</div>
+      <div class="pregunta-caso"><b>c)</b> Asigna tareas a cada rol: ¿qué haría el data engineer, el data scientist y el ML engineer en este proyecto?</div>
+      <div class="pregunta-caso"><b>d)</b> ¿Este caso requiere tecnologías de Big Data? Justifica tu respuesta con las cinco V.</div>
+    </div>
+  </div>
+
+  <!-- ACT 4 QUIZ -->
+  <div class="act">
+    <div class="head"><span class="num">4</span><span class="ti">Quiz de autoevaluación<small>5 preguntas · puntaje automático</small></span></div>
+    <div class="body">
+      <div class="quiz" data-quiz="q1">
+        <h4>Verifica lo aprendido</h4>
+        <div class="q-item" data-answer="b">
+          <div class="qt">1. En el proceso KDD, la minería de datos es:</div>
+          <label><input type="radio" name="q1-1"> a) Un sinónimo de todo el proceso.</label>
+          <label><input type="radio" name="q1-1"> b) Una de las cinco etapas, dedicada a aplicar algoritmos para descubrir patrones.</label>
+          <label><input type="radio" name="q1-1"> c) La etapa de limpieza de datos.</label>
+          <label><input type="radio" name="q1-1"> d) Una librería de Python.</label>
+        </div>
+        <div class="q-item" data-answer="c">
+          <div class="qt">2. ¿Qué diferencia principal tiene CRISP-DM frente a KDD?</div>
+          <label><input type="radio" name="q1-2"> a) No incluye modelado.</label>
+          <label><input type="radio" name="q1-2"> b) Solo sirve para Big Data.</label>
+          <label><input type="radio" name="q1-2"> c) Parte de la comprensión del negocio y es explícitamente iterativo.</label>
+          <label><input type="radio" name="q1-2"> d) Es exclusivo de Python.</label>
+        </div>
+        <div class="q-item" data-answer="a">
+          <div class="qt">3. El rol que diseña y mantiene los pipelines e infraestructura de datos es:</div>
+          <label><input type="radio" name="q1-3"> a) Data Engineer.</label>
+          <label><input type="radio" name="q1-3"> b) Data Scientist.</label>
+          <label><input type="radio" name="q1-3"> c) Diseñador gráfico.</label>
+          <label><input type="radio" name="q1-3"> d) Administrador de redes.</label>
+        </div>
+        <div class="q-item" data-answer="d">
+          <div class="qt">4. ¿Cuál librería se usa para manipular datos tabulares como DataFrames?</div>
+          <label><input type="radio" name="q1-4"> a) matplotlib.</label>
+          <label><input type="radio" name="q1-4"> b) NumPy.</label>
+          <label><input type="radio" name="q1-4"> c) Git.</label>
+          <label><input type="radio" name="q1-4"> d) pandas.</label>
+        </div>
+        <div class="q-item" data-answer="b">
+          <div class="qt">5. Las "cinco V" son un marco para caracterizar:</div>
+          <label><input type="radio" name="q1-5"> a) Los roles profesionales.</label>
+          <label><input type="radio" name="q1-5"> b) Big Data (volumen, velocidad, variedad, veracidad, valor).</label>
+          <label><input type="radio" name="q1-5"> c) Las fases de CRISP-DM.</label>
+          <label><input type="radio" name="q1-5"> d) Los comandos de Git.</label>
+        </div>
+        <button class="btn" onclick="calif('q1')">Calificar quiz</button>
+        <div class="score" id="score-q1"></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section" id="s2">
+  <div class="eyebrow">Semana 2</div>
+  <h2 class="sec">Estadística avanzada y probabilidad aplicada (I)</h2>
+  <p class="lead">Los datos no hablan solos: la estadística es el idioma con el que los interrogamos. Esta semana adquieres el vocabulario cuantitativo que sostiene todo modelo posterior, desde describir un conjunto de datos hasta razonar sobre la incertidumbre con probabilidad.</p>
+
+  <h3>Introducción</h3>
+  <p>Antes de aplicar cualquier algoritmo de aprendizaje automático, un ingeniero debe saber describir sus datos y razonar sobre la incertidumbre. La <b>estadística descriptiva</b> resume lo que hay; la <b>estadística inferencial</b> permite generalizar de una muestra a una población; y la <b>probabilidad</b> cuantifica qué tan verosímiles son los eventos. Esta semana conectas estos tres bloques con datos masivos: verás por qué el <b>teorema del límite central</b> es la piedra angular que hace posible inferir, y cómo el <b>teorema de Bayes</b> —el mismo principio detrás de un filtro de spam— actualiza creencias con evidencia.</p>
+
+  <div class="card prev">
+    <div class="eyebrow" style="color:var(--acento)">Conocimiento previo</div>
+    <p class="q">Si te dijeran que el ingreso "promedio" de los egresados de una carrera es de 40 000 pesos, ¿te bastaría ese dato para decidir si estudiarla? ¿Qué otra medida pedirías para entender mejor la situación real?</p>
+    <details class="reveal">
+      <summary>Ver una pista para contrastar tu respuesta</summary>
+      <p style="margin-top:.6rem">El promedio (media) puede ocultar una enorme desigualdad: unos pocos egresados con ingresos altísimos lo inflan. Necesitarías la <b>mediana</b> y una medida de <b>dispersión</b> como la desviación estándar. Esa intuición es el corazón de la estadística descriptiva de esta semana.</p>
+    </details>
+  </div>
+
+  <h3>Contenido temático</h3>
+
+  <div class="sesion">
+    <div class="tag">Sesión 1 · 2 horas</div>
+    <h4>Estadística descriptiva e inferencial</h4>
+    <p><b>Medidas de tendencia central:</b> la <b>media</b> (promedio aritmético), la <b>mediana</b> (valor central, robusta ante valores extremos) y la <b>moda</b> (valor más frecuente). Elegir la correcta depende de la forma de la distribución.</p>
+    <p><b>Medidas de dispersión:</b> el <b>rango</b>, la <b>varianza</b> y la <b>desviación estándar</b> indican qué tan dispersos están los datos alrededor del centro. Sin dispersión, la media es engañosa.</p>
+    <p><b>Distribuciones de probabilidad</b> clave:</p>
+    <ul>
+      <li><b>Normal (gaussiana):</b> la campana simétrica; describe muchísimos fenómenos naturales y es la base de gran parte de la inferencia.</li>
+      <li><b>Binomial:</b> número de éxitos en una serie de ensayos independientes con dos resultados posibles (éxito/fracaso).</li>
+      <li><b>Poisson:</b> número de eventos que ocurren en un intervalo fijo de tiempo o espacio (por ejemplo, solicitudes a un servidor por segundo).</li>
+    </ul>
+    <p>El <b>teorema del límite central</b> establece que la distribución de las medias de muestras suficientemente grandes se aproxima a una normal, sin importar la distribución original de los datos. Este resultado es lo que permite hacer inferencia sobre grandes volúmenes de información con garantías matemáticas.</p>
+    <div class="card" style="margin-top:1rem;border-left:4px solid var(--azul)">
+      <b>Actividad en clase:</b> calculen estadísticos descriptivos y visualicen distribuciones (normal, binomial y Poisson) usando <code>scipy.stats</code>.
+    </div>
+  </div>
+
+  <div class="sesion">
+    <div class="tag">Sesión 2 · 2 horas</div>
+    <h4>Probabilidad aplicada</h4>
+    <p><b>Probabilidad condicional:</b> la probabilidad de un evento dado que otro ya ocurrió, escrita P(A|B). Es la base para razonar con información parcial.</p>
+    <p><b>Teorema de Bayes:</b> permite invertir una probabilidad condicional y actualizar una creencia inicial (probabilidad previa) a la luz de nueva evidencia, produciendo una probabilidad posterior. Es el motor de los clasificadores Naive Bayes y de los filtros de spam.</p>
+    <p><b>Variables aleatorias:</b> funciones que asignan un valor numérico a cada resultado de un experimento; pueden ser discretas o continuas.</p>
+    <p><b>Intervalos de confianza:</b> un rango de valores que, con cierto nivel de confianza (por ejemplo 95 %), contiene el verdadero parámetro poblacional. Comunican la incertidumbre de una estimación, algo esencial al trabajar con muestras.</p>
+    <div class="card" style="margin-top:1rem;border-left:4px solid var(--azul)">
+      <b>Actividad en clase:</b> resuelvan un ejercicio de Bayes aplicado a un problema de clasificación simple (filtro de spam conceptual): dada la probabilidad de que ciertas palabras aparezcan en correos spam y legítimos, calculen la probabilidad de que un correo sea spam.
+    </div>
+  </div>
+
+  <h3>Materiales externos de consulta</h3>
+  <div class="card">
+    <div class="recurso"><span class="tipo">Libro</span><div>Wasserman, L. <i>All of Statistics: A Concise Course in Statistical Inference</i>, Springer. Referencia rigurosa de inferencia.</div></div>
+    <div class="recurso"><span class="tipo">Libro</span><div>Downey, A. <i>Think Stats: Exploratory Data Analysis in Python</i> (2.ª ed.), O'Reilly. Enfoque práctico con código.</div></div>
+    <div class="recurso"><span class="tipo">Docs</span><div>Documentación de <a href="https://docs.scipy.org/doc/scipy/reference/stats.html" target="_blank" rel="noopener">scipy.stats</a>: distribuciones y pruebas estadísticas.</div></div>
+    <div class="recurso"><span class="tipo">Curso</span><div><a href="https://seeing-theory.brown.edu/es.html" target="_blank" rel="noopener">Seeing Theory</a> (Universidad de Brown): visualizaciones interactivas de probabilidad y estadística.</div></div>
+  </div>
+
+  <h3>Actividades para entregar en Classroom</h3>
+
+  <div class="act">
+    <div class="head"><span class="num">1</span><span class="ti">Foro de mediación<small>Reflexión crítica</small></span></div>
+    <div class="body">
+      <span class="classroom">Entrega en Classroom · Foro</span>
+      <p><b>Pregunta detonadora:</b> "Un titular afirma: 'El 90 % de los usuarios prefiere nuestra aplicación'. Como futuro ingeniero que entiende de muestreo, intervalos de confianza y sesgos, ¿qué preguntas críticas le harías a esa afirmación antes de creerla? ¿Cómo se puede usar la estadística tanto para revelar la verdad como para manipularla?"</p>
+      <h4>Instrucciones paso a paso</h4>
+      <ol class="pasos">
+        <li>Escribe una respuesta inicial de 150 a 250 palabras.</li>
+        <li>Menciona explícitamente al menos dos conceptos de la semana (tamaño de muestra, intervalo de confianza, sesgo de selección, etc.).</li>
+        <li>Aporta un ejemplo real donde una estadística mal comunicada haya llevado a una conclusión errónea.</li>
+        <li>Responde a dos compañeros ampliando o cuestionando su análisis con un argumento técnico.</li>
+      </ol>
+      <p><b>Ejemplo de apertura:</b> "Lo primero que preguntaría es a cuántos usuarios se encuestó y cómo se seleccionaron, porque un 90 % sobre una muestra de 20 personas autoseleccionadas no es comparable con..."</p>
+    </div>
+  </div>
+
+  <div class="act">
+    <div class="head"><span class="num">2</span><span class="ti">Práctica en Python<small>Aprendizaje aplicado en VS Code</small></span></div>
+    <div class="body">
+      <span class="classroom">Entrega en Classroom · Enlace a GitHub + notebook</span>
+      <p><b>Meta integral:</b> construir un notebook que describa estadísticamente un dataset real, visualice sus distribuciones y aplique el teorema de Bayes a un mini clasificador de spam. Integrarás descripción, distribución teórica y razonamiento probabilístico en un solo entregable.</p>
+      <h4>Instrucciones paso a paso</h4>
+      <ol class="pasos">
+        <li>Reutiliza tu repositorio del curso y crea <code>semana02_estadistica.ipynb</code>.</li>
+        <li>Instala <code>scipy</code> y <code>seaborn</code> en tu entorno virtual.</li>
+        <li>Calcula media, mediana, moda y desviación estándar de una variable numérica de tu dataset.</li>
+        <li>Grafica su histograma y superpón una curva normal teórica para comparar.</li>
+        <li>Simula y grafica una distribución binomial y una de Poisson con <code>scipy.stats</code>.</li>
+        <li>Implementa el mini clasificador de spam con el teorema de Bayes.</li>
+        <li>Confirma y sube tus cambios a GitHub.</li>
+      </ol>
+      <h4>Comandos de terminal</h4>
+      <pre><span class="c"># Con el entorno virtual activado</span>
+pip install scipy seaborn</pre>
+      <h4>Código del notebook</h4>
+      <pre><span class="k">import</span> numpy <span class="k">as</span> np
+<span class="k">import</span> pandas <span class="k">as</span> pd
+<span class="k">import</span> matplotlib.pyplot <span class="k">as</span> plt
+<span class="k">from</span> scipy <span class="k">import</span> stats
+
+df = pd.read_csv(<span class="s">"mi_dataset.csv"</span>)
+col = df.select_dtypes(<span class="s">"number"</span>).columns[<span class="s">0</span>]
+datos = df[col].dropna()
+
+<span class="c"># 1) Estadistica descriptiva</span>
+print(<span class="s">"Media:   "</span>, datos.mean())
+print(<span class="s">"Mediana: "</span>, datos.median())
+print(<span class="s">"Moda:    "</span>, datos.mode()[<span class="s">0</span>])
+print(<span class="s">"Desv.est:"</span>, datos.std())
+
+<span class="c"># 2) Histograma con curva normal teorica</span>
+plt.hist(datos, bins=<span class="s">25</span>, density=<span class="k">True</span>, alpha=<span class="s">.6</span>)
+x = np.linspace(datos.min(), datos.max(), <span class="s">200</span>)
+plt.plot(x, stats.norm.pdf(x, datos.mean(), datos.std()))
+plt.title(<span class="s">f"Distribucion de {col} vs. normal teorica"</span>)
+plt.show()
+
+<span class="c"># 3) Teorema de Bayes: clasificador de spam conceptual</span>
+<span class="c"># P(spam)=0.4  P(gratis|spam)=0.8  P(gratis|no_spam)=0.1</span>
+p_spam = <span class="s">0.4</span>
+p_gratis_dado_spam = <span class="s">0.8</span>
+p_gratis_dado_no = <span class="s">0.1</span>
+p_no_spam = <span class="s">1</span> - p_spam
+
+p_gratis = p_gratis_dado_spam*p_spam + p_gratis_dado_no*p_no_spam
+p_spam_dado_gratis = (p_gratis_dado_spam*p_spam) / p_gratis
+print(<span class="s">f"P(spam | contiene 'gratis') = {p_spam_dado_gratis:.3f}"</span>)</pre>
+      <h4>Criterios de entrega</h4>
+      <ul>
+        <li>Celdas Markdown interpretando cada resultado: ¿la variable se parece a una normal? ¿Qué te dice la probabilidad posterior?</li>
+        <li>Repositorio actualizado con el nuevo notebook.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="act">
+    <div class="head"><span class="num">3</span><span class="ti">Caso práctico<small>Análisis y argumentación</small></span></div>
+    <div class="body caso" style="border-radius:0 0 14px 14px;margin:0;padding:1.3rem 1.4rem">
+      <span class="classroom">Entrega en Classroom · Documento breve</span>
+      <p><b>Situación:</b> un hospital implementa una prueba rápida para una enfermedad. La prueba detecta correctamente al 99 % de los enfermos (sensibilidad) y da negativo correctamente al 95 % de los sanos (especificidad). Se sabe que solo el 1 % de la población tiene la enfermedad. Un paciente da positivo y entra en pánico.</p>
+      <div class="pregunta-caso"><b>a)</b> Aplicando el teorema de Bayes, calcula la probabilidad real de que el paciente esté enfermo dado que dio positivo. Muestra el procedimiento.</div>
+      <div class="pregunta-caso"><b>b)</b> El resultado suele sorprender. Explica con tus palabras por qué una prueba "99 % precisa" produce tantos falsos positivos en este escenario.</div>
+      <div class="pregunta-caso"><b>c)</b> ¿Qué papel juega la probabilidad previa (el 1 % de prevalencia) en el resultado? ¿Qué pasaría si la enfermedad afectara al 30 % de la población?</div>
+      <div class="pregunta-caso"><b>d)</b> Relaciona este caso con el diseño de un sistema automático de detección (por ejemplo, un antivirus o un filtro de fraude): ¿por qué minimizar falsos positivos es un problema de ingeniería y no solo de matemáticas?</div>
+    </div>
+  </div>
+
+  <div class="act">
+    <div class="head"><span class="num">4</span><span class="ti">Quiz de autoevaluación<small>5 preguntas · puntaje automático</small></span></div>
+    <div class="body">
+      <div class="quiz" data-quiz="q2">
+        <h4>Verifica lo aprendido</h4>
+        <div class="q-item" data-answer="b">
+          <div class="qt">1. Ante una distribución de ingresos muy sesgada por unos pocos valores altos, la medida de tendencia central más representativa es:</div>
+          <label><input type="radio" name="q2-1"> a) La media.</label>
+          <label><input type="radio" name="q2-1"> b) La mediana.</label>
+          <label><input type="radio" name="q2-1"> c) El rango.</label>
+          <label><input type="radio" name="q2-1"> d) La varianza.</label>
+        </div>
+        <div class="q-item" data-answer="c">
+          <div class="qt">2. El teorema del límite central afirma que:</div>
+          <label><input type="radio" name="q2-2"> a) Todos los datos siguen una normal.</label>
+          <label><input type="radio" name="q2-2"> b) La mediana siempre es mayor que la media.</label>
+          <label><input type="radio" name="q2-2"> c) La distribución de las medias muestrales tiende a una normal al crecer el tamaño de muestra.</label>
+          <label><input type="radio" name="q2-2"> d) La probabilidad siempre es 0.5.</label>
+        </div>
+        <div class="q-item" data-answer="a">
+          <div class="qt">3. La distribución de Poisson modela típicamente:</div>
+          <label><input type="radio" name="q2-3"> a) El número de eventos en un intervalo fijo de tiempo o espacio.</label>
+          <label><input type="radio" name="q2-3"> b) La altura de las personas.</label>
+          <label><input type="radio" name="q2-3"> c) El resultado de lanzar una moneda una sola vez.</label>
+          <label><input type="radio" name="q2-3"> d) La correlación entre dos variables.</label>
+        </div>
+        <div class="q-item" data-answer="d">
+          <div class="qt">4. El teorema de Bayes permite:</div>
+          <label><input type="radio" name="q2-4"> a) Calcular únicamente la media.</label>
+          <label><input type="radio" name="q2-4"> b) Ordenar datos alfabéticamente.</label>
+          <label><input type="radio" name="q2-4"> c) Eliminar valores nulos.</label>
+          <label><input type="radio" name="q2-4"> d) Actualizar una probabilidad previa con nueva evidencia.</label>
+        </div>
+        <div class="q-item" data-answer="b">
+          <div class="qt">5. Un intervalo de confianza del 95 % sirve para:</div>
+          <label><input type="radio" name="q2-5"> a) Garantizar que no hay error.</label>
+          <label><input type="radio" name="q2-5"> b) Expresar un rango plausible para el parámetro poblacional con un nivel de confianza dado.</label>
+          <label><input type="radio" name="q2-5"> c) Indicar la moda.</label>
+          <label><input type="radio" name="q2-5"> d) Contar registros duplicados.</label>
+        </div>
+        <button class="btn" onclick="calif('q2')">Calificar quiz</button>
+        <div class="score" id="score-q2"></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section" id="s3">
+  <div class="eyebrow">Semana 3</div>
+  <h2 class="sec">Estadística avanzada y probabilidad aplicada (II)</h2>
+  <p class="lead">Describir datos ya no basta: ahora tomarás decisiones con ellos. Las pruebas de hipótesis convierten preguntas en afirmaciones verificables, y la regresión te permite modelar y predecir relaciones entre variables, el puente directo hacia el aprendizaje automático.</p>
+
+  <h3>Introducción</h3>
+  <p>Esta semana cierras el bloque estadístico con dos herramientas de decisión fundamentales. Las <b>pruebas de hipótesis</b> te dan un método formal para decidir si una diferencia observada es real o producto del azar, un juicio que todo ingeniero debe emitir con rigor. La <b>correlación y la regresión</b> te permiten medir y modelar cómo se relacionan las variables, y construir tu primer modelo predictivo. Aquí aparece por primera vez la línea que conecta la estadística clásica con el machine learning: una regresión lineal es, a la vez, una prueba estadística y un modelo de predicción.</p>
+
+  <div class="card prev">
+    <div class="eyebrow" style="color:var(--acento)">Conocimiento previo</div>
+    <p class="q">Imagina que cambias el color de un botón en una app y las ventas suben un 3 % esa semana. ¿Cómo sabrías si ese aumento se debe realmente al nuevo color y no a la casualidad? ¿Qué necesitarías para estar razonablemente seguro?</p>
+    <details class="reveal">
+      <summary>Ver una pista para contrastar tu respuesta</summary>
+      <p style="margin-top:.6rem">Necesitas comparar dos grupos (con y sin el cambio) y determinar si la diferencia es <b>estadísticamente significativa</b> o cabe dentro de la variación normal. Eso es exactamente lo que hace una prueba de hipótesis con su <b>p-valor</b>, el tema central de esta semana.</p>
+    </details>
+  </div>
+
+  <h3>Contenido temático</h3>
+
+  <div class="sesion">
+    <div class="tag">Sesión 1 · 2 horas</div>
+    <h4>Pruebas de hipótesis</h4>
+    <p>Una prueba de hipótesis contrasta una <b>hipótesis nula</b> (H₀: no hay efecto o diferencia) contra una <b>hipótesis alternativa</b> (H₁: sí lo hay). El procedimiento calcula qué tan probable sería observar los datos si H₀ fuera cierta.</p>
+    <ul>
+      <li><b>Prueba t:</b> compara las medias de uno o dos grupos.</li>
+      <li><b>Chi-cuadrada:</b> evalúa la asociación entre variables categóricas.</li>
+      <li><b>ANOVA:</b> compara las medias de tres o más grupos simultáneamente.</li>
+    </ul>
+    <p>El <b>p-valor</b> es la probabilidad de obtener un resultado al menos tan extremo como el observado si H₀ es verdadera. Un p-valor por debajo de un umbral (habitualmente 0.05) lleva a rechazar H₀. Dos errores acechan toda decisión:</p>
+    <ul>
+      <li><b>Error tipo I (falso positivo):</b> rechazar H₀ cuando es verdadera.</li>
+      <li><b>Error tipo II (falso negativo):</b> no rechazar H₀ cuando es falsa.</li>
+    </ul>
+    <p>En datos masivos surge un matiz importante: con muestras enormes, casi cualquier diferencia se vuelve "estadísticamente significativa", aunque sea irrelevante en la práctica. Por eso el <b>tamaño de muestra</b> y el <b>tamaño del efecto</b> deben interpretarse juntos con el p-valor.</p>
+    <div class="card" style="margin-top:1rem;border-left:4px solid var(--azul)">
+      <b>Actividad en clase:</b> apliquen pruebas de hipótesis para comparar dos o más grupos de un dataset e interpreten el p-valor en contexto.
+    </div>
+  </div>
+
+  <div class="sesion">
+    <div class="tag">Sesión 2 · 2 horas</div>
+    <h4>Correlación y regresión estadística</h4>
+    <p><b>Correlación</b> mide la fuerza y dirección de la relación lineal entre dos variables, con un coeficiente entre −1 y 1:</p>
+    <ul>
+      <li><b>Pearson:</b> para relaciones lineales entre variables numéricas.</li>
+      <li><b>Spearman:</b> basada en rangos, capta relaciones monótonas y es robusta ante valores atípicos.</li>
+    </ul>
+    <p>Advertencia central: <b>correlación no implica causalidad</b>. Dos variables pueden moverse juntas por una tercera causa oculta o por coincidencia.</p>
+    <p><b>Regresión lineal</b> modela una variable dependiente como función de una (simple) o varias (múltiple) variables independientes, ajustando una recta o hiperplano. Sus <b>coeficientes</b> se interpretan como el cambio esperado en la variable dependiente por cada unidad de cambio en la independiente, manteniendo las demás constantes.</p>
+    <p>El modelo descansa en <b>supuestos</b> que deben verificarse: linealidad, independencia de los errores, homocedasticidad (varianza constante del error) y normalidad de los residuos. Ignorarlos produce modelos engañosos.</p>
+    <div class="card" style="margin-top:1rem;border-left:4px solid var(--azul)">
+      <b>Actividad en clase:</b> construyan un modelo de regresión lineal e interpreten sus coeficientes y su bondad de ajuste.
+    </div>
+  </div>
+
+  <h3>Materiales externos de consulta</h3>
+  <div class="card">
+    <div class="recurso"><span class="tipo">Libro</span><div>James, G., Witten, D., Hastie, T. y Tibshirani, R. <i>An Introduction to Statistical Learning</i>, Springer. Capítulo 3: regresión lineal. Disponible gratuitamente.</div></div>
+    <div class="recurso"><span class="tipo">Libro</span><div>Diez, D., Barr, C. y Çetinkaya-Rundel, M. <i>OpenIntro Statistics</i>. Texto abierto sobre inferencia y pruebas de hipótesis.</div></div>
+    <div class="recurso"><span class="tipo">Docs</span><div>Documentación de <a href="https://www.statsmodels.org/stable/index.html" target="_blank" rel="noopener">statsmodels</a> y de <a href="https://scikit-learn.org/stable/modules/linear_model.html" target="_blank" rel="noopener">modelos lineales en scikit-learn</a>.</div></div>
+    <div class="recurso"><span class="tipo">Referencia</span><div>Wasserstein, R. y Lazar, N. (2016). Declaración de la <i>American Statistical Association</i> sobre el uso correcto del p-valor.</div></div>
+  </div>
+
+  <h3>Actividades para entregar en Classroom</h3>
+
+  <div class="act">
+    <div class="head"><span class="num">1</span><span class="ti">Foro de mediación<small>Reflexión crítica</small></span></div>
+    <div class="body">
+      <span class="classroom">Entrega en Classroom · Foro</span>
+      <p><b>Pregunta detonadora:</b> "Se dice que 'la correlación no implica causalidad', pero muchas decisiones de negocio y de política pública se toman confundiendo ambas. Comparte un ejemplo de una correlación espuria o mal interpretada. Como ingeniero que construirá sistemas que recomiendan y predicen, ¿qué responsabilidad ética tienes al presentar estas relaciones a personas que no distinguen correlación de causalidad?"</p>
+      <h4>Instrucciones paso a paso</h4>
+      <ol class="pasos">
+        <li>Publica una respuesta inicial de 150 a 250 palabras con un ejemplo concreto de correlación espuria.</li>
+        <li>Explica qué variable oculta o mecanismo podría estar detrás de esa correlación.</li>
+        <li>Reflexiona sobre la dimensión ética de comunicar resultados a públicos no técnicos.</li>
+        <li>Responde a dos compañeros aportando otra interpretación o un contraejemplo.</li>
+      </ol>
+      <p><b>Ejemplo de apertura:</b> "Un caso clásico es la correlación entre el consumo de helado y los ahogamientos: ambos suben en verano. La variable oculta es la temperatura, y presentarlo como causa directa sería..."</p>
+    </div>
+  </div>
+
+  <div class="act">
+    <div class="head"><span class="num">2</span><span class="ti">Práctica en Python<small>Aprendizaje aplicado en VS Code</small></span></div>
+    <div class="body">
+      <span class="classroom">Entrega en Classroom · Enlace a GitHub + notebook</span>
+      <p><b>Meta integral:</b> tomar un dataset real, formular una hipótesis, contrastarla con una prueba estadística, medir la correlación entre dos variables y ajustar un modelo de regresión lineal que interpretes. Un flujo completo de análisis inferencial en un solo entregable.</p>
+      <h4>Instrucciones paso a paso</h4>
+      <ol class="pasos">
+        <li>Crea <code>semana03_inferencia.ipynb</code> en tu repositorio del curso.</li>
+        <li>Instala <code>statsmodels</code> y <code>scikit-learn</code> en tu entorno.</li>
+        <li>Formula una hipótesis clara sobre tu dataset (por ejemplo: "el grupo A tiene una media mayor que el grupo B").</li>
+        <li>Aplica una prueba t y reporta el p-valor; concluye si rechazas o no la hipótesis nula.</li>
+        <li>Calcula la correlación de Pearson entre dos variables numéricas y grafica su diagrama de dispersión.</li>
+        <li>Ajusta una regresión lineal simple e interpreta la pendiente y el R².</li>
+        <li>Sube el notebook a GitHub con tus interpretaciones en Markdown.</li>
+      </ol>
+      <h4>Comandos de terminal</h4>
+      <pre><span class="c"># Con el entorno virtual activado</span>
+pip install statsmodels scikit-learn</pre>
+      <h4>Código del notebook</h4>
+      <pre><span class="k">import</span> pandas <span class="k">as</span> pd
+<span class="k">import</span> matplotlib.pyplot <span class="k">as</span> plt
+<span class="k">from</span> scipy <span class="k">import</span> stats
+<span class="k">from</span> sklearn.linear_model <span class="k">import</span> LinearRegression
+
+df = pd.read_csv(<span class="s">"mi_dataset.csv"</span>).dropna()
+
+<span class="c"># 1) Prueba t entre dos grupos (ajusta los nombres de columna)</span>
+grupo = df[<span class="s">"categoria"</span>].unique()[:<span class="s">2</span>]
+a = df[df[<span class="s">"categoria"</span>]==grupo[<span class="s">0</span>]][<span class="s">"valor"</span>]
+b = df[df[<span class="s">"categoria"</span>]==grupo[<span class="s">1</span>]][<span class="s">"valor"</span>]
+t, p = stats.ttest_ind(a, b, equal_var=<span class="k">False</span>)
+print(<span class="s">f"t = {t:.3f}   p-valor = {p:.4f}"</span>)
+print(<span class="s">"Rechazamos H0"</span> <span class="k">if</span> p &lt; <span class="s">0.05</span> <span class="k">else</span> <span class="s">"No rechazamos H0"</span>)
+
+<span class="c"># 2) Correlacion de Pearson</span>
+x_col, y_col = <span class="s">"variable_x"</span>, <span class="s">"variable_y"</span>
+r, p_corr = stats.pearsonr(df[x_col], df[y_col])
+print(<span class="s">f"Correlacion de Pearson: r = {r:.3f}"</span>)
+plt.scatter(df[x_col], df[y_col], alpha=<span class="s">.5</span>)
+plt.xlabel(x_col); plt.ylabel(y_col); plt.show()
+
+<span class="c"># 3) Regresion lineal simple</span>
+X = df[[x_col]]; y = df[y_col]
+modelo = LinearRegression().fit(X, y)
+print(<span class="s">f"Pendiente: {modelo.coef_[0]:.3f}"</span>)
+print(<span class="s">f"Intercepto: {modelo.intercept_:.3f}"</span>)
+print(<span class="s">f"R2: {modelo.score(X, y):.3f}"</span>)</pre>
+      <h4>Criterios de entrega</h4>
+      <ul>
+        <li>Una celda Markdown que declare la hipótesis nula y alternativa antes de la prueba.</li>
+        <li>Interpretación escrita de la pendiente y del R²: ¿qué significan en términos del problema real?</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="act">
+    <div class="head"><span class="num">3</span><span class="ti">Caso práctico<small>Análisis y argumentación</small></span></div>
+    <div class="body caso" style="border-radius:0 0 14px 14px;margin:0;padding:1.3rem 1.4rem">
+      <span class="classroom">Entrega en Classroom · Documento breve</span>
+      <p><b>Situación:</b> una plataforma de streaming realiza una prueba A/B para un nuevo diseño de su página de inicio. Con una muestra de 2 millones de usuarios obtiene un p-valor de 0.001 y concluye que el nuevo diseño "aumenta significativamente" el tiempo de reproducción. Sin embargo, el aumento real en la media es de 4 segundos por sesión. El equipo de producto quiere invertir seis meses de desarrollo para desplegarlo a nivel global.</p>
+      <div class="pregunta-caso"><b>a)</b> El p-valor es muy pequeño. Explica por qué, con 2 millones de usuarios, esto era casi inevitable y qué relación tiene con el tamaño de muestra en datos masivos.</div>
+      <div class="pregunta-caso"><b>b)</b> Distingue entre significancia estadística y significancia práctica. ¿Un aumento de 4 segundos justifica la inversión? Argumenta.</div>
+      <div class="pregunta-caso"><b>c)</b> ¿Qué error (tipo I o tipo II) sería más costoso en esta decisión y por qué?</div>
+      <div class="pregunta-caso"><b>d)</b> Propón qué información adicional pedirías al equipo antes de recomendar el despliegue global.</div>
+    </div>
+  </div>
+
+  <div class="act">
+    <div class="head"><span class="num">4</span><span class="ti">Quiz de autoevaluación<small>5 preguntas · puntaje automático</small></span></div>
+    <div class="body">
+      <div class="quiz" data-quiz="q3">
+        <h4>Verifica lo aprendido</h4>
+        <div class="q-item" data-answer="c">
+          <div class="qt">1. El p-valor representa:</div>
+          <label><input type="radio" name="q3-1"> a) La probabilidad de que la hipótesis nula sea verdadera.</label>
+          <label><input type="radio" name="q3-1"> b) El tamaño del efecto.</label>
+          <label><input type="radio" name="q3-1"> c) La probabilidad de observar un resultado tan extremo como el obtenido si H₀ es verdadera.</label>
+          <label><input type="radio" name="q3-1"> d) El número de grupos comparados.</label>
+        </div>
+        <div class="q-item" data-answer="a">
+          <div class="qt">2. Un error de tipo I ocurre cuando:</div>
+          <label><input type="radio" name="q3-2"> a) Se rechaza H₀ siendo verdadera (falso positivo).</label>
+          <label><input type="radio" name="q3-2"> b) Se acepta H₀ siendo verdadera.</label>
+          <label><input type="radio" name="q3-2"> c) No se rechaza H₀ siendo falsa.</label>
+          <label><input type="radio" name="q3-2"> d) La muestra es demasiado pequeña.</label>
+        </div>
+        <div class="q-item" data-answer="d">
+          <div class="qt">3. Para comparar las medias de tres o más grupos simultáneamente se usa:</div>
+          <label><input type="radio" name="q3-3"> a) La correlación de Pearson.</label>
+          <label><input type="radio" name="q3-3"> b) La prueba chi-cuadrada.</label>
+          <label><input type="radio" name="q3-3"> c) La regresión logística.</label>
+          <label><input type="radio" name="q3-3"> d) ANOVA.</label>
+        </div>
+        <div class="q-item" data-answer="b">
+          <div class="qt">4. La afirmación "correlación no implica causalidad" significa que:</div>
+          <label><input type="radio" name="q3-4"> a) Dos variables correlacionadas nunca se relacionan.</label>
+          <label><input type="radio" name="q3-4"> b) Que dos variables se muevan juntas no prueba que una cause la otra.</label>
+          <label><input type="radio" name="q3-4"> c) La correlación siempre es negativa.</label>
+          <label><input type="radio" name="q3-4"> d) La regresión no usa correlación.</label>
+        </div>
+        <div class="q-item" data-answer="c">
+          <div class="qt">5. En una regresión lineal simple, la pendiente representa:</div>
+          <label><input type="radio" name="q3-5"> a) El valor máximo de los datos.</label>
+          <label><input type="radio" name="q3-5"> b) El número de observaciones.</label>
+          <label><input type="radio" name="q3-5"> c) El cambio esperado en la variable dependiente por cada unidad de cambio en la independiente.</label>
+          <label><input type="radio" name="q3-5"> d) La probabilidad de error.</label>
+        </div>
+        <button class="btn" onclick="calif('q3')">Calificar quiz</button>
+        <div class="score" id="score-q3"></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section" id="reflexion">
+  <div class="eyebrow">Cierre del bloque</div>
+  <h2 class="sec">Reflexión y aplicación</h2>
+  <p class="lead">El conocimiento se consolida cuando decides conscientemente dónde usarlo. Cierra estas tres semanas planificando cómo integrarás lo aprendido en tu vida académica y profesional.</p>
+
+  <div class="card reflex">
+    <h3>Bitácora de aplicación</h3>
+    <p>Responde con honestidad. Puedes escribir aquí para ordenar tus ideas y luego trasladar tu reflexión final a Classroom.</p>
+    <label>1. En otra de tus materias de este semestre, ¿en qué tarea o proyecto podrías aplicar el proceso KDD o CRISP-DM para estructurar tu trabajo con datos?</label>
+    <textarea placeholder="Por ejemplo: en el proyecto de bases de datos podría documentar cada fase de CRISP-DM..."></textarea>
+    <label>2. ¿Qué concepto estadístico de estas semanas cambió la forma en que interpretas noticias, estudios o afirmaciones cuantitativas?</label>
+    <textarea placeholder="Escribe tu reflexión..."></textarea>
+    <label>3. Pensando en tu futuro profesional, ¿cuál de los tres roles (data scientist, data engineer o ML engineer) te atrae más y qué habilidad de este bloque necesitas reforzar para acercarte a él?</label>
+    <textarea placeholder="Escribe tu reflexión..."></textarea>
+    <label>4. Define una meta concreta y medible para las próximas tres semanas que profundice algo visto aquí.</label>
+    <textarea placeholder="Por ejemplo: completar un dataset limpio y documentado en mi repositorio de GitHub..."></textarea>
+    <button class="btn ghost" onclick="guardarReflexion()">Guardar mi bitácora en este dispositivo</button>
+    <div id="reflex-msg" style="margin-top:.8rem;font-family:'JetBrains Mono',monospace;font-size:.85rem;color:#a9e5c0"></div>
+  </div>
+
+  <div class="card">
+    <h4>Autoevaluación del bloque: ¿estás listo para avanzar?</h4>
+    <p>Deberías poder responder con seguridad a estas preguntas antes de la Semana 4:</p>
+    <ul>
+      <li>¿Puedo explicar la diferencia entre KDD, minería de datos, Big Data e ingeniería de datos con un ejemplo propio?</li>
+      <li>¿Tengo un entorno de Python funcional y un repositorio de GitHub con al menos tres notebooks?</li>
+      <li>¿Sé elegir la medida estadística adecuada y justificar cuándo una diferencia es significativa?</li>
+      <li>¿Puedo interpretar un p-valor, una correlación y los coeficientes de una regresión sin confundir correlación con causalidad?</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <img src="data:image/png;base64,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flrOlIvlVxIvfT/Q8L9DbpR4efnHco7Ep/GPlUNkb4lXDDaQZl8+J4T0O67/Z2eLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAABacu8//T+wJF0i54bpgwAAAABJRU5ErkJggg==" alt="UNE">
+  <p><strong>Universidad de Especialidades UNE · Plantel Centro</strong></p>
+  <p>Optativa III: Ciencia de Datos · Ingeniería en Computación · 9.º semestre</p>
+  <p style="margin-top:.8rem;opacity:.8">Guía interactiva de estudio diseñada con metodología constructivista, pedagogía activa y aprendizaje basado en problemas. Material educativo para uso académico. Las actividades marcadas se entregan en Google Classroom.</p>
+</footer>
+</main>
+</div>
+<a href="#portada" class="top" id="topbtn" aria-label="Volver arriba">↑</a>
+
+<script>
+// Quiz calificador
+function calif(id){
+  const box=document.querySelector('[data-quiz="'+id+'"]');
+  const items=box.querySelectorAll('.q-item');
+  let correctas=0, contestadas=0;
+  items.forEach(item=>{
+    const ok=item.dataset.answer;
+    const labels=item.querySelectorAll('label');
+    const idx={a:0,b:1,c:2,d:3}[ok];
+    let elegido=-1;
+    labels.forEach((l,i)=>{
+      l.classList.remove('correct','wrong');
+      if(l.querySelector('input').checked) elegido=i;
+    });
+    if(elegido>=0) contestadas++;
+    if(elegido===idx){correctas++; labels[idx].classList.add('correct');}
+    else{ if(elegido>=0) labels[elegido].classList.add('wrong'); labels[idx].classList.add('correct'); }
+  });
+  const total=items.length;
+  const pct=Math.round(correctas/total*100);
+  const s=document.getElementById('score-'+id);
+  let msg='Puntaje: '+correctas+' / '+total+'  ('+pct+'%)';
+  if(contestadas<total) msg='Responde todas las preguntas. '+msg;
+  else if(pct===100) msg='Excelente. Dominas el tema. '+msg;
+  else if(pct>=60) msg='Buen trabajo. Repasa lo marcado en rojo. '+msg;
+  else msg='Conviene repasar el contenido de la semana. '+msg;
+  s.textContent=msg;
+  s.classList.add('show');
+}
+
+// Reflexion: guardar en localStorage
+function guardarReflexion(){
+  const areas=document.querySelectorAll('.reflex textarea');
+  const data=[...areas].map(a=>a.value);
+  try{
+    localStorage.setItem('optativa3_reflexion', JSON.stringify(data));
+    document.getElementById('reflex-msg').textContent='Bitacora guardada en este navegador. Recuerda trasladar tu version final a Classroom.';
+  }catch(e){
+    document.getElementById('reflex-msg').textContent='No se pudo guardar automaticamente. Copia tu texto manualmente.';
+  }
+}
+window.addEventListener('load',()=>{
+  try{
+    const raw=localStorage.getItem('optativa3_reflexion');
+    if(raw){const data=JSON.parse(raw);document.querySelectorAll('.reflex textarea').forEach((a,i)=>{if(data[i])a.value=data[i];});}
+  }catch(e){}
+});
+
+// Scrollspy + boton arriba
+const secciones=[...document.querySelectorAll('main section[id]')];
+const enlaces=[...document.querySelectorAll('#toc a')];
+const topbtn=document.getElementById('topbtn');
+function onScroll(){
+  let actual='';
+  secciones.forEach(s=>{ if(window.scrollY>=s.offsetTop-120) actual=s.id; });
+  enlaces.forEach(a=>{ a.classList.toggle('on', a.getAttribute('href')==='#'+actual); });
+  topbtn.classList.toggle('show', window.scrollY>500);
+}
+window.addEventListener('scroll',onScroll); onScroll();
+
+// Cerrar menu movil al elegir
+enlaces.forEach(a=>a.addEventListener('click',()=>document.querySelector('.side').classList.remove('open')));
+</script>
+</body>
+</html>
