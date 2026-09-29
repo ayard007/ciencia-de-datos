@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Optativa III: Ciencia de Datos — Ingeniería de datos y NoSQL | UNE Plantel Centro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#1e2a6b; --azul-800:#18225a; --azul-900:#111a45;
+  --rojo:#e2231a; --rojo-700:#c01810;
+  --papel:#f5f3ec; --papel-2:#ece8dc; --tinta:#1a1c22; --tinta-suave:#4a4d57;
+  --linea:#d8d3c4; --blanco:#ffffff;
+  --ok:#1f7a4d; --acento:#e8a200;
+  --sombra:0 1px 2px rgba(17,26,69,.06),0 8px 30px rgba(17,26,69,.08);
+  --radio:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif;color:var(--tinta);
+  background:var(--papel);
+  background-image:linear-gradient(var(--linea) 1px,transparent 1px),linear-gradient(90deg,var(--linea) 1px,transparent 1px);
+  background-size:100% 3.5rem, 3.5rem 100%;
+  background-position:0 -1px;
+  line-height:1.65;-webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:var(--azul);text-decoration:none}
+a:hover{text-decoration:underline}
+code,kbd,.mono{font-family:'JetBrains Mono',monospace}
+.wrap{display:grid;grid-template-columns:290px 1fr;max-width:1400px;margin:0 auto;gap:0}
+.side{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;background:var(--azul-900);color:#dfe3f2;padding:0;border-right:3px solid var(--rojo)}
+.main{min-width:0;padding:0}
+.brand{padding:1.6rem 1.4rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.1);position:sticky;top:0;background:var(--azul-900);z-index:2}
+.brand img{width:96px;margin-bottom:.8rem;background:#fff;padding:.5rem .7rem;border-radius:10px}
+.brand .mat{font-family:'Fraunces',serif;font-weight:900;font-size:1.05rem;color:#fff;line-height:1.15;letter-spacing:-.01em}
+.brand .sub{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#8b93c4;margin-top:.35rem}
+nav.toc{padding:1rem .8rem 3rem}
+nav.toc .grp{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:#7f88bd;margin:1.3rem .6rem .5rem}
+nav.toc a{display:block;color:#c7ccea;padding:.42rem .7rem;border-radius:8px;font-size:.9rem;font-weight:500;border-left:2px solid transparent}
+nav.toc a:hover{background:rgba(255,255,255,.06);text-decoration:none;color:#fff}
+nav.toc a.on{background:var(--rojo);color:#fff;border-left-color:#fff}
+nav.toc a .n{font-family:'JetBrains Mono',monospace;font-size:.72rem;opacity:.7;margin-right:.5rem}
+.hero{position:relative;overflow:hidden;background:var(--azul);color:#fff;padding:3.5rem 3rem 3rem;border-bottom:4px solid var(--rojo)}
+.hero::before{content:"";position:absolute;inset:0;opacity:.14;background-image:radial-gradient(circle at 1px 1px,#fff 1.2px,transparent 0);background-size:22px 22px}
+.hero .kick{position:relative;font-family:'JetBrains Mono',monospace;font-size:.78rem;letter-spacing:.28em;text-transform:uppercase;color:#f3b6b2}
+.hero h1{position:relative;font-family:'Fraunces',serif;font-weight:900;font-size:clamp(2rem,4.6vw,3.4rem);line-height:1.02;letter-spacing:-.02em;margin:.7rem 0 .8rem;max-width:22ch}
+.hero p{position:relative;max-width:62ch;color:#d5d9f0;font-size:1.05rem}
+.hero .meta{position:relative;display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.6rem}
+.hero .meta span{font-family:'JetBrains Mono',monospace;font-size:.76rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:.4rem .7rem;border-radius:999px}
+.section{padding:3rem 3rem;border-bottom:1px solid var(--linea);scroll-margin-top:1rem}
+.section-intro{background:var(--papel-2)}
+.eyebrow{display:inline-flex;align-items:center;gap:.6rem;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--rojo-700);font-weight:700;margin-bottom:.7rem}
+.eyebrow::before{content:"";width:26px;height:2px;background:var(--rojo)}
+h2.sec{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(1.6rem,3vw,2.3rem);letter-spacing:-.02em;line-height:1.08;margin-bottom:.4rem}
+h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.35rem;margin:2rem 0 .7rem;color:var(--azul-900)}
+h4{font-size:1.05rem;font-weight:700;margin:1.4rem 0 .5rem;color:var(--azul-800)}
+.section p{margin:.7rem 0;max-width:75ch}
+.section ul,.section ol{margin:.7rem 0 .7rem 1.3rem;max-width:75ch}
+.section li{margin:.35rem 0}
+.lead{font-size:1.12rem;color:var(--tinta-suave)}
+.card{background:var(--blanco);border:1px solid var(--linea);border-radius:var(--radio);padding:1.5rem 1.6rem;box-shadow:var(--sombra);margin:1.2rem 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.sesion{background:var(--blanco);border:1px solid var(--linea);border-left:4px solid var(--azul);border-radius:12px;padding:1.3rem 1.4rem;margin:1rem 0}
+.sesion .tag{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--azul);font-weight:700}
+.sesion h4{margin-top:.3rem}
+.prev{border-left:4px solid var(--acento);background:#fdf8ea}
+.prev .q{font-weight:600;color:var(--azul-900)}
+details.reveal{margin-top:.6rem}
+details.reveal summary{cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--rojo-700);font-weight:700;list-style:none}
+details.reveal summary::-webkit-details-marker{display:none}
+details.reveal summary::before{content:"▸ ";}
+details.reveal[open] summary::before{content:"▾ "}
+.recurso{display:flex;gap:.8rem;align-items:flex-start;padding:.7rem 0;border-bottom:1px dashed var(--linea)}
+.recurso:last-child{border-bottom:none}
+.recurso .tipo{flex:0 0 auto;font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;background:var(--azul);color:#fff;padding:.2rem .5rem;border-radius:5px;margin-top:.15rem}
+.act{border:1px solid var(--linea);border-radius:var(--radio);margin:1.4rem 0;overflow:hidden;background:var(--blanco);box-shadow:var(--sombra)}
+.act > .head{display:flex;align-items:center;gap:.9rem;padding:1rem 1.4rem;background:var(--azul);color:#fff}
+.act > .head .num{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:1.1rem;background:var(--rojo);width:2rem;height:2rem;display:grid;place-items:center;border-radius:8px;flex:0 0 auto}
+.act > .head .ti{font-weight:700;font-size:1.05rem}
+.act > .head .ti small{display:block;font-weight:500;font-size:.74rem;opacity:.8;text-transform:uppercase;letter-spacing:.12em;font-family:'JetBrains Mono',monospace}
+.act > .body{padding:1.3rem 1.4rem}
+.classroom{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ok);border:1px solid var(--ok);border-radius:6px;padding:.15rem .5rem;margin-bottom:.6rem}
+ol.pasos{counter-reset:p;list-style:none;margin-left:0}
+ol.pasos li{counter-increment:p;position:relative;padding:.55rem 0 .55rem 2.6rem;border-bottom:1px dashed var(--linea)}
+ol.pasos li:last-child{border-bottom:none}
+ol.pasos li::before{content:counter(p);position:absolute;left:0;top:.5rem;width:1.7rem;height:1.7rem;background:var(--papel-2);border:1px solid var(--linea);color:var(--azul);font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.8rem;display:grid;place-items:center;border-radius:50%}
+pre{background:var(--azul-900);color:#e7ebfb;border-radius:10px;padding:1.1rem 1.2rem;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:.82rem;line-height:1.55;margin:.9rem 0;border:1px solid #0c1234}
+pre .c{color:#8ea0d8}
+pre .k{color:#ff9d8a}
+pre .s{color:#a9e5c0}
+:not(pre)>code{background:var(--papel-2);border:1px solid var(--linea);border-radius:5px;padding:.08em .4em;font-size:.86em;color:var(--azul-900)}
+.caso{border-left:4px solid var(--rojo);background:#fdf2f1}
+.pregunta-caso{background:var(--blanco);border:1px solid var(--linea);border-radius:10px;padding:.9rem 1.1rem;margin:.7rem 0}
+.pregunta-caso b{color:var(--azul-900)}
+table.cmp{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.9rem;background:var(--blanco);border-radius:10px;overflow:hidden;box-shadow:var(--sombra)}
+table.cmp th{background:var(--azul);color:#fff;text-align:left;padding:.7rem .9rem;font-size:.82rem}
+table.cmp td{padding:.65rem .9rem;border-bottom:1px solid var(--linea);vertical-align:top}
+table.cmp tr:last-child td{border-bottom:none}
+table.cmp td:first-child{font-weight:600;color:var(--azul-900)}
+.quiz{background:var(--azul-900);color:#eef1fb;border-radius:var(--radio);padding:1.6rem 1.6rem 1.4rem;margin:1.4rem 0}
+.quiz h4{color:#fff;margin-top:0}
+.q-item{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:1rem 1.1rem;margin:.9rem 0}
+.q-item .qt{font-weight:600;margin-bottom:.6rem}
+.q-item label{display:block;padding:.45rem .7rem;border-radius:8px;cursor:pointer;border:1px solid transparent;transition:.15s;font-size:.94rem}
+.q-item label:hover{background:rgba(255,255,255,.08)}
+.q-item input{margin-right:.6rem;accent-color:var(--rojo)}
+.q-item label.correct{background:rgba(31,122,77,.25);border-color:var(--ok)}
+.q-item label.wrong{background:rgba(226,35,26,.22);border-color:var(--rojo)}
+.btn{display:inline-block;background:var(--rojo);color:#fff;font-weight:700;font-family:'Inter';border:none;border-radius:9px;padding:.7rem 1.4rem;cursor:pointer;font-size:.95rem}
+.btn:hover{background:var(--rojo-700)}
+.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.35);color:#fff}
+.score{margin-top:1rem;font-family:'JetBrains Mono',monospace;font-size:1.1rem;font-weight:700;display:none;padding:.9rem 1.1rem;border-radius:10px;background:rgba(255,255,255,.1)}
+.score.show{display:block}
+.reflex{background:linear-gradient(135deg,var(--azul),var(--azul-900));color:#fff;border:none}
+.reflex h3{color:#fff}
+.reflex textarea{width:100%;min-height:90px;border-radius:10px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.07);color:#fff;padding:.8rem;font-family:'Inter';font-size:.95rem;resize:vertical;margin:.3rem 0 1rem}
+.reflex textarea::placeholder{color:#aab2dd}
+.reflex label{font-weight:600;display:block;margin-bottom:.3rem}
+footer{background:var(--azul-900);color:#aeb6dd;padding:2.4rem 3rem;font-size:.86rem}
+footer strong{color:#fff}
+footer img{width:70px;background:#fff;border-radius:8px;padding:.4rem .5rem;margin-bottom:.8rem}
+.top{position:fixed;right:1.2rem;bottom:1.2rem;background:var(--azul);color:#fff;width:2.8rem;height:2.8rem;border-radius:50%;display:grid;place-items:center;box-shadow:var(--sombra);font-size:1.2rem;z-index:20;opacity:0;pointer-events:none;transition:.2s;border:none;cursor:pointer}
+.top.show{opacity:1;pointer-events:auto}
+.menu-btn{display:none}
+@media(max-width:900px){
+  .wrap{grid-template-columns:1fr}
+  .side{position:fixed;left:0;top:0;width:280px;z-index:50;transform:translateX(-100%);transition:.25s;box-shadow:0 0 40px rgba(0,0,0,.4)}
+  .side.open{transform:none}
+  .menu-btn{display:grid;place-items:center;position:fixed;top:1rem;left:1rem;z-index:60;width:2.9rem;height:2.9rem;background:var(--azul);color:#fff;border:none;border-radius:10px;font-size:1.3rem;box-shadow:var(--sombra)}
+  .hero,.section,footer{padding-left:1.3rem;padding-right:1.3rem}
+  .grid2{grid-template-columns:1fr}
+  .hero{padding-top:4.5rem}
+  table.cmp{font-size:.8rem}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto;transition:none!important}}
+</style>
+</head>
+<body>
+<button class="menu-btn" onclick="document.querySelector('.side').classList.toggle('open')" aria-label="Menú">☰</button>
+<div class="wrap">
+<aside class="side">
+  <div class="brand">
+    <img src="data:image/png;base64,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flrOlIvlVxIvfT/Q8L9DbpR4efnHco7Ep/GPlUNkb4lXDDaQZl8+J4T0O67/Z2eLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAABacu8//T+wJF0i54bpgwAAAABJRU5ErkJggg==" alt="Universidad de Especialidades UNE">
+    <div class="mat">Optativa III:<br>Ciencia de Datos</div>
+    <div class="sub">UNE · Plantel Centro</div>
+  </div>
+  <nav class="toc" id="toc">
+    <div class="grp">Inicio</div>
+    <a href="#portada"><span class="n">00</span>Presentación</a>
+    <a href="#uso"><span class="n">·</span>Cómo usar la guía</a>
+    <div class="grp">Semana 6</div>
+    <a href="#s6"><span class="n">06</span>Ingeniería de datos</a>
+    <div class="grp">Semana 7</div>
+    <a href="#s7"><span class="n">07</span>NoSQL y distribuidas</a>
+    <div class="grp">Cierre</div>
+    <a href="#reflexion"><span class="n">08</span>Reflexión y aplicación</a>
+  </nav>
+</aside>
+<main class="main">
+<section class="hero" id="portada">
+  <div class="kick">Ingeniería en Computación · 9.º Semestre</div>
+  <h1>Ingeniería de datos y bases de datos NoSQL</h1>
+  <p>Guía interactiva de las Semanas 6 y 7 del curso-taller de Ciencia de Datos. Construida con metodología constructivista, pedagogía activa y aprendizaje basado en problemas, para que pases del concepto de arquitectura de datos a la implementación real de pipelines ETL y bases NoSQL que puedas aplicar en tus proyectos universitarios.</p>
+  <div class="meta">
+    <span>Semanas 6 y 7</span>
+    <span>ETL · SQLite · MongoDB</span>
+    <span>Python · VS Code</span>
+    <span>Entregas en Classroom</span>
+  </div>
+</section>
+
+<section class="section section-intro" id="uso">
+  <div class="eyebrow">Orientación</div>
+  <h2 class="sec">Cómo trabajar con esta guía</h2>
+  <p class="lead">Esta guía no es un texto para leer de forma pasiva. Está diseñada para que construyas conocimiento haciendo: cada semana plantea un problema de ingeniería de datos, te da las herramientas conceptuales y te reta a producir un pipeline o modelo funcional que puedas defender.</p>
+  <div class="grid2">
+    <div class="card">
+      <h4>Estructura de cada semana</h4>
+      <ol>
+        <li>Introducción y pregunta de conocimiento previo</li>
+        <li>Contenido temático por sesión</li>
+        <li>Materiales externos de consulta formal</li>
+        <li>Cuatro actividades prácticas para Classroom</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h4>Las cuatro actividades entregables</h4>
+      <ol>
+        <li><b>Foro de mediación:</b> reflexión crítica e intercambio de ideas.</li>
+        <li><b>Práctica en Python:</b> paso a paso en VS Code.</li>
+        <li><b>Caso práctico:</b> análisis y respuesta argumentada.</li>
+        <li><b>Quiz:</b> cinco preguntas con puntaje automático.</li>
+      </ol>
+    </div>
+  </div>
+  <div class="card" style="border-left:4px solid var(--ok)">
+    <h4>Requisitos técnicos</h4>
+    <p>Necesitas <b>Visual Studio Code</b>, <b>Python 3.10 o superior</b> y una cuenta de <b>GitHub</b>. Para la Semana 7 usarás <b>MongoDB</b>, que puedes instalar localmente o usar gratis en la nube con <b>MongoDB Atlas</b> (se explica en la práctica). Todo el software es libre o tiene una capa gratuita.</p>
+  </div>
+</section>
+<section class="section" id="s6">
+  <div class="eyebrow">Semana 6</div>
+  <h2 class="sec">Fundamentos de ingeniería de datos</h2>
+  <p class="lead">Antes de analizar o visualizar datos, alguien tuvo que construir la tubería que los lleva desde su origen hasta un lugar donde se pueden consultar. Esa disciplina es la ingeniería de datos: el trabajo silencioso que hace posible toda la ciencia de datos posterior.</p>
+
+  <h3>Introducción</h3>
+  <p>Un científico de datos pasa la mayor parte de su tiempo esperando que los datos lleguen limpios, completos y a tiempo. Ese flujo no ocurre por arte de magia: lo diseña y mantiene un ingeniero de datos mediante <b>pipelines</b>. En esta semana aprenderás a pensar como uno: distinguirás <b>ETL</b> de <b>ELT</b>, <b>procesamiento por lotes</b> de <b>flujo continuo</b>, y las tres grandes formas de almacenar datos a escala (<b>data warehouse</b>, <b>data lake</b> y <b>lakehouse</b>). En la segunda sesión bajarás a la práctica: diseñarás un <b>modelo dimensional</b> (esquema estrella) y construirás un <b>pipeline ETL completo</b> en Python que extrae datos, los transforma y los carga a una base de datos SQLite consultable.</p>
+
+  <div class="card prev">
+    <div class="eyebrow" style="color:var(--acento)">Conocimiento previo</div>
+    <p class="q">Antes de continuar, responde mentalmente: si una tienda en línea genera miles de ventas al día en distintos sistemas (punto de venta, app, sitio web), ¿qué pasos crees que hay que dar para que toda esa información termine en un solo reporte ordenado que la gerencia pueda consultar cada mañana?</p>
+    <details class="reveal">
+      <summary>Ver una pista para contrastar tu respuesta</summary>
+      <p style="margin-top:.6rem">Tu lista probablemente incluye: recolectar los datos de cada fuente, limpiarlos y darles un formato común, y guardarlos en un lugar central. Esa secuencia —extraer, transformar, cargar— es exactamente un pipeline ETL, el concepto vertebral de esta semana.</p>
+    </details>
+  </div>
+
+  <h3>Contenido temático</h3>
+
+  <div class="sesion">
+    <div class="tag">Sesión 1 · 2 horas</div>
+    <h4>Arquitecturas de datos</h4>
+    <p>Un <b>pipeline de datos</b> es una secuencia de pasos automatizados que mueve datos desde una o varias fuentes hasta un destino, transformándolos en el camino. Es la "tubería" de la organización.</p>
+    <p>Existen dos grandes formas de ordenar esos pasos:</p>
+    <ul>
+      <li><b>ETL (Extract, Transform, Load):</b> se extraen los datos, se <b>transforman antes</b> de guardarlos, y se cargan ya limpios. Es el enfoque clásico de los data warehouses: los datos llegan al destino listos para usar.</li>
+      <li><b>ELT (Extract, Load, Transform):</b> se extraen, se <b>cargan crudos</b> al destino, y se transforman <b>después</b>, cuando se necesitan. Es el enfoque moderno del big data, viable cuando el almacenamiento es barato y el poder de cómputo abundante.</li>
+    </ul>
+    <p>Según <b>cuándo</b> se procesan los datos, distinguimos:</p>
+    <ul>
+      <li><b>Batch (por lotes):</b> se procesan grandes volúmenes juntos, en intervalos programados (por ejemplo, el reporte de ventas de todo el día se calcula a medianoche). Eficiente, pero no es en tiempo real.</li>
+      <li><b>Streaming (flujo continuo):</b> se procesa cada dato en cuanto llega (por ejemplo, detectar un fraude en el instante de la compra). Es en tiempo real, pero más complejo y costoso.</li>
+    </ul>
+    <p>Y según <b>dónde y cómo</b> se almacenan, hay tres arquitecturas:</p>
+    <table class="cmp">
+      <tr><th>Arquitectura</th><th>Qué guarda</th><th>Analogía</th></tr>
+      <tr><td>Data Warehouse</td><td>Datos estructurados y procesados, en tablas, optimizados para consultas SQL.</td><td>Una biblioteca con libros catalogados.</td></tr>
+      <tr><td>Data Lake</td><td>Datos crudos de cualquier tipo (JSON, texto, imágenes, video). Barato y flexible.</td><td>Un lago donde se echa todo tal cual llega.</td></tr>
+      <tr><td>Lakehouse</td><td>Híbrido: la flexibilidad del lake con la estructura y el rendimiento del warehouse.</td><td>Un lago con un sistema de catalogación encima.</td></tr>
+    </table>
+    <div class="card" style="margin-top:1rem;border-left:4px solid var(--azul)">
+      <b>Actividad en clase:</b> en equipos, diseñen en papel un pipeline ETL para un caso de negocio (por ejemplo, una cadena de cafeterías con varias sucursales). Especifiquen las fuentes, las transformaciones, el destino, y justifiquen si conviene ETL o ELT, batch o streaming.
+    </div>
+  </div>
+
+  <div class="sesion">
+    <div class="tag">Sesión 2 · 2 horas</div>
+    <h4>Modelado de datos</h4>
+    <p>Guardar datos para analítica no es lo mismo que guardarlos para una aplicación. El <b>modelado dimensional</b> organiza los datos para que las consultas analíticas sean rápidas e intuitivas. Su forma más común es el <b>esquema estrella</b>:</p>
+    <ul>
+      <li><b>Tabla de hechos (fact table):</b> el centro de la estrella. Guarda las <b>métricas numéricas</b> (ventas, cantidades, precios) y las <b>claves</b> que apuntan a las dimensiones.</li>
+      <li><b>Tablas de dimensiones:</b> los descriptores que dan contexto (categoría, producto, tiempo, cliente). Cada una se conecta directamente a la tabla de hechos, formando una estrella.</li>
+    </ul>
+    <p>El <b>esquema copo de nieve (snowflake)</b> es una variante donde las dimensiones se <b>normalizan</b> en sub-dimensiones (más tablas). Comparación clave:</p>
+    <table class="cmp">
+      <tr><th>Criterio</th><th>Estrella</th><th>Copo de nieve</th></tr>
+      <tr><td>Normalización</td><td>Desnormalizado</td><td>Normalizado</td></tr>
+      <tr><td>Número de JOINs</td><td>Menos (más rápido)</td><td>Más (más lento)</td></tr>
+      <tr><td>Redundancia</td><td>Alguna</td><td>Mínima</td></tr>
+      <tr><td>Uso ideal</td><td>Dashboards muy consultados</td><td>Ahorro de espacio</td></tr>
+    </table>
+    <p>Esto conecta con un principio fundamental: las bases <b>transaccionales</b> (OLTP, que registran compras) se <b>normalizan</b> para evitar redundancia al escribir; las bases <b>analíticas</b> (OLAP, que analizan ventas) se <b>desnormalizan</b> para leer rápido. Distinto objetivo, distinto diseño.</p>
+    <div class="card" style="margin-top:1rem;border-left:4px solid var(--azul)">
+      <b>Actividad en clase:</b> construyan un ETL sencillo en Python que extraiga datos de un archivo, los transforme y los cargue a una base de datos SQLite con un esquema estrella (tabla de hechos + dimensión).
+    </div>
+  </div>
+
+  <h3>Materiales externos de consulta</h3>
+  <div class="card">
+    <div class="recurso"><span class="tipo">Libro</span><div>Kimball, R. y Ross, M. <i>The Data Warehouse Toolkit</i> (3.ª ed.), Wiley. Obra de referencia sobre modelado dimensional (esquema estrella).</div></div>
+    <div class="recurso"><span class="tipo">Libro</span><div>Reis, J. y Housley, M. <i>Fundamentals of Data Engineering</i>, O'Reilly. Panorama moderno de arquitecturas, pipelines y ciclo de vida de los datos.</div></div>
+    <div class="recurso"><span class="tipo">Docs</span><div>Documentación oficial de <a href="https://docs.python.org/es/3/library/sqlite3.html" target="_blank" rel="noopener">sqlite3 (Python)</a> y de <a href="https://pandas.pydata.org/docs/" target="_blank" rel="noopener">pandas</a>.</div></div>
+    <div class="recurso"><span class="tipo">Estándar</span><div>Documentación del modelo <i>CRISP-DM</i>, donde la preparación y transformación de datos son fases centrales.</div></div>
+    <div class="recurso"><span class="tipo">Datos</span><div>APIs públicas para practicar extracción: <a href="https://dummyjson.com/docs/products" target="_blank" rel="noopener">DummyJSON</a> (tienda) y <a href="https://openfoodfacts.github.io/openfoodfacts-server/api/" target="_blank" rel="noopener">Open Food Facts</a> (base colaborativa).</div></div>
+  </div>
+
+  <h3>Actividades para entregar en Classroom</h3>
+
+  <!-- ACT 1 FORO -->
+  <div class="act">
+    <div class="head"><span class="num">1</span><span class="ti">Foro de mediación<small>Reflexión crítica</small></span></div>
+    <div class="body">
+      <span class="classroom">Entrega en Classroom · Foro</span>
+      <p><b>Pregunta detonadora:</b> "Se dice que un científico de datos dedica hasta el 80% de su tiempo a preparar y mover datos, no a construir modelos. Si la ingeniería de datos es tan determinante, ¿por qué crees que suele recibir menos reconocimiento que el modelado o la inteligencia artificial? ¿Qué consecuencias tiene para una organización descuidar su infraestructura de datos?"</p>
+      <h4>Instrucciones paso a paso</h4>
+      <ol class="pasos">
+        <li>Publica una respuesta inicial de 150 a 250 palabras que tome una postura argumentada.</li>
+        <li>Apóyate en al menos un material de consulta de la semana y cítalo.</li>
+        <li>Da un ejemplo concreto de qué falla en un análisis cuando la "tubería" de datos está mal construida.</li>
+        <li>Responde de forma crítica y respetuosa a por lo menos dos compañeros, aportando un ejemplo o una objeción.</li>
+      </ol>
+      <p><b>Ejemplo de apertura:</b> "Considero que la ingeniería de datos recibe menos reconocimiento porque su trabajo es invisible cuando funciona bien; solo se nota cuando falla. Sin embargo, en un proyecto en el que participé..."</p>
+    </div>
+  </div>
+
+  <!-- ACT 2 PYTHON -->
+  <div class="act">
+    <div class="head"><span class="num">2</span><span class="ti">Práctica en Python<small>Pipeline ETL en VS Code</small></span></div>
+    <div class="body">
+      <span class="classroom">Entrega en Classroom · Enlace a GitHub + notebook o script</span>
+      <p><b>Meta integral:</b> construir un pipeline ETL completo que extraiga datos, los transforme con una feature nueva, los modele en un esquema estrella y los cargue a una base de datos SQLite consultable. Este es el flujo real de un ingeniero de datos.</p>
+      <h4>Instrucciones paso a paso</h4>
+      <ol class="pasos">
+        <li>En VS Code, crea una carpeta para el proyecto y un entorno virtual. Instala las librerías con <code>pip install pandas</code> (sqlite3 ya viene con Python).</li>
+        <li>Prepara un archivo <code>ventas.csv</code> con columnas: producto, categoria, precio, cantidad (puedes inventar 10-15 filas).</li>
+        <li>Escribe el script <code>etl.py</code> con las tres fases: extracción, transformación y carga.</li>
+        <li>Verifica el resultado con una consulta SQL que una la tabla de hechos con la dimensión.</li>
+        <li>Sube el proyecto a un repositorio de GitHub con un README que explique cada fase.</li>
+      </ol>
+      <h4>Código del pipeline (etl.py)</h4>
+      <pre><span class="k">import</span> pandas <span class="k">as</span> pd
+<span class="k">import</span> sqlite3
+
+<span class="c"># ===== EXTRACT: leer los datos de la fuente =====</span>
+df = pd.read_csv(<span class="s">"ventas.csv"</span>)
+print(<span class="s">"Extraídas"</span>, len(df), <span class="s">"filas"</span>)
+
+<span class="c"># ===== TRANSFORM: limpiar y crear una feature nueva =====</span>
+df[<span class="s">"total"</span>] = df[<span class="s">"precio"</span>] * df[<span class="s">"cantidad"</span>]   <span class="c"># ingreso por venta</span>
+
+<span class="c"># Modelado dimensional: esquema estrella</span>
+dim_categoria = pd.DataFrame({<span class="s">"categoria"</span>: df[<span class="s">"categoria"</span>].unique()})
+dim_categoria[<span class="s">"cat_id"</span>] = range(<span class="s">1</span>, len(dim_categoria) + <span class="s">1</span>)
+
+fact = df.merge(dim_categoria, on=<span class="s">"categoria"</span>)
+fact_ventas = fact[[<span class="s">"producto"</span>, <span class="s">"cat_id"</span>, <span class="s">"precio"</span>, <span class="s">"cantidad"</span>, <span class="s">"total"</span>]]
+
+<span class="c"># ===== LOAD: cargar a SQLite =====</span>
+conn = sqlite3.connect(<span class="s">"almacen.db"</span>)
+dim_categoria.to_sql(<span class="s">"dim_categoria"</span>, conn, if_exists=<span class="s">"replace"</span>, index=<span class="k">False</span>)
+fact_ventas.to_sql(<span class="s">"fact_ventas"</span>, conn, if_exists=<span class="s">"replace"</span>, index=<span class="k">False</span>)
+
+<span class="c"># ===== Consulta analítica (esquema estrella en acción) =====</span>
+query = <span class="s">"""
+SELECT d.categoria, COUNT(*) AS num_ventas, SUM(f.total) AS ingresos
+FROM fact_ventas f
+JOIN dim_categoria d ON f.cat_id = d.cat_id
+GROUP BY d.categoria
+ORDER BY ingresos DESC
+"""</span>
+print(pd.read_sql(query, conn))
+conn.close()</pre>
+      <h4>Criterios de entrega</h4>
+      <ul>
+        <li>Enlace público al repositorio de GitHub con el script y el CSV.</li>
+        <li>README que documente qué hace cada fase (EXTRACT, TRANSFORM, LOAD) y qué modela el esquema estrella.</li>
+        <li>Captura o salida de la consulta final funcionando.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ACT 3 CASO -->
+  <div class="act">
+    <div class="head"><span class="num">3</span><span class="ti">Caso práctico<small>Análisis y argumentación</small></span></div>
+    <div class="body caso" style="border-radius:0 0 14px 14px;margin:0;padding:1.3rem 1.4rem">
+      <span class="classroom">Entrega en Classroom · Documento breve</span>
+      <p><b>Situación:</b> una plataforma de streaming de música tiene tres fuentes de datos: (1) los eventos de reproducción de cada usuario (millones por minuto), (2) el catálogo de canciones (cambia varias veces al día), y (3) las suscripciones de pago (se procesan mensualmente). La dirección quiere un dashboard de tendencias musicales actualizado y, además, detectar en el momento si un usuario está compartiendo su cuenta desde varios países a la vez.</p>
+      <div class="pregunta-caso"><b>a)</b> Para cada una de las tres fuentes, decide si conviene procesamiento <b>batch</b> o <b>streaming</b>, y justifica.</div>
+      <div class="pregunta-caso"><b>b)</b> Los eventos de reproducción son masivos y crudos. ¿Los guardarías en un <b>data warehouse</b>, un <b>data lake</b> o un <b>lakehouse</b>? ¿Y el catálogo estructurado para el dashboard?</div>
+      <div class="pregunta-caso"><b>c)</b> Diseña el <b>esquema estrella</b> para el análisis de tendencias: ¿cuál sería la tabla de hechos y qué dimensiones tendría?</div>
+      <div class="pregunta-caso"><b>d)</b> La detección de cuentas compartidas requiere tiempo real. Explica por qué un pipeline batch (que corre cada noche) sería inadecuado para este objetivo.</div>
+    </div>
+  </div>
+
+  <!-- ACT 4 QUIZ -->
+  <div class="act">
+    <div class="head"><span class="num">4</span><span class="ti">Quiz de autoevaluación<small>5 preguntas · puntaje automático</small></span></div>
+    <div class="body">
+      <div class="quiz" data-quiz="q6">
+        <h4>Verifica lo aprendido</h4>
+        <div class="q-item" data-answer="b">
+          <div class="qt">1. La diferencia clave entre ETL y ELT es:</div>
+          <label><input type="radio" name="q6-1"> a) ETL es para bases NoSQL y ELT para SQL.</label>
+          <label><input type="radio" name="q6-1"> b) El orden de la transformación: ETL transforma antes de cargar; ELT carga crudo y transforma después.</label>
+          <label><input type="radio" name="q6-1"> c) ELT no permite limpiar los datos.</label>
+          <label><input type="radio" name="q6-1"> d) No hay ninguna diferencia real.</label>
+        </div>
+        <div class="q-item" data-answer="c">
+          <div class="qt">2. Para detectar un fraude en el instante en que ocurre una transacción, conviene:</div>
+          <label><input type="radio" name="q6-2"> a) Procesamiento por lotes cada 24 horas.</label>
+          <label><input type="radio" name="q6-2"> b) Guardar todo y revisarlo el fin de semana.</label>
+          <label><input type="radio" name="q6-2"> c) Procesamiento en streaming (tiempo real).</label>
+          <label><input type="radio" name="q6-2"> d) No se puede detectar fraude con datos.</label>
+        </div>
+        <div class="q-item" data-answer="a">
+          <div class="qt">3. Un data lake se caracteriza por:</div>
+          <label><input type="radio" name="q6-3"> a) Almacenar datos crudos de cualquier tipo, de forma flexible y barata.</label>
+          <label><input type="radio" name="q6-3"> b) Guardar solo tablas estructuradas y ordenadas.</label>
+          <label><input type="radio" name="q6-3"> c) Ser exclusivo para datos financieros.</label>
+          <label><input type="radio" name="q6-3"> d) No poder almacenar imágenes ni video.</label>
+        </div>
+        <div class="q-item" data-answer="d">
+          <div class="qt">4. En un esquema estrella, la tabla de hechos (fact table) guarda principalmente:</div>
+          <label><input type="radio" name="q6-4"> a) Solo texto descriptivo.</label>
+          <label><input type="radio" name="q6-4"> b) Los nombres completos de las categorías repetidos.</label>
+          <label><input type="radio" name="q6-4"> c) Imágenes de los productos.</label>
+          <label><input type="radio" name="q6-4"> d) Las métricas numéricas y las claves que apuntan a las dimensiones.</label>
+        </div>
+        <div class="q-item" data-answer="b">
+          <div class="qt">5. Se prefiere un esquema estrella (desnormalizado) sobre uno copo de nieve para un dashboard muy consultado porque:</div>
+          <label><input type="radio" name="q6-5"> a) Ocupa menos espacio en disco.</label>
+          <label><input type="radio" name="q6-5"> b) Requiere menos JOINs, por lo que las consultas son más rápidas.</label>
+          <label><input type="radio" name="q6-5"> c) No permite hacer consultas.</label>
+          <label><input type="radio" name="q6-5"> d) Elimina la necesidad de tablas de hechos.</label>
+        </div>
+        <button class="btn" onclick="calif('q6')">Calificar quiz</button>
+        <div class="score" id="score-q6"></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section" id="s7">
+  <div class="eyebrow">Semana 7</div>
+  <h2 class="sec">Bases de datos NoSQL y distribuidas</h2>
+  <p class="lead">Durante décadas, "base de datos" significó tablas relacionales y SQL. Pero la escala de internet rompió ese molde: cuando los datos son enormes, cambiantes y deben responder en milisegundos a millones de usuarios, surgen nuevas formas de almacenar y distribuir la información. Bienvenido al mundo NoSQL.</p>
+
+  <h3>Introducción</h3>
+  <p>Las bases relacionales son excelentes para datos estructurados y transacciones consistentes, pero tienen límites cuando se necesita escalar horizontalmente a través de muchos servidores o manejar datos sin un esquema fijo. Las bases <b>NoSQL</b> ("Not Only SQL") responden a esos retos con modelos distintos: <b>documentales</b>, <b>clave-valor</b>, <b>columnares</b> y de <b>grafos</b>. En esta semana entenderás el <b>teorema CAP</b>, que explica por qué ninguna base distribuida puede tenerlo todo, aprenderás cuándo elegir NoSQL sobre SQL, y practicarás operaciones <b>CRUD</b> en <b>MongoDB</b>. En la segunda sesión explorarás cómo estas bases se <b>distribuyen</b> mediante particionamiento y replicación, y compararás en la práctica un mismo problema resuelto con SQL y con NoSQL.</p>
+
+  <div class="card prev">
+    <div class="eyebrow" style="color:var(--acento)">Conocimiento previo</div>
+    <p class="q">Antes de continuar, responde mentalmente: si tuvieras que guardar el perfil de cada usuario de una red social —donde unos tienen 2 fotos y otros 2000, unos llenan 50 campos y otros solo 3—, ¿te resultaría cómodo hacerlo en una tabla con columnas fijas? ¿Qué problema aparece?</p>
+    <details class="reveal">
+      <summary>Ver una pista para contrastar tu respuesta</summary>
+      <p style="margin-top:.6rem">Una tabla rígida obligaría a dejar muchas columnas vacías o a crear tablas auxiliares interminables. Una base <b>documental</b> como MongoDB permite que cada usuario sea un documento flexible con solo los campos que necesita. Esa flexibilidad de esquema es una de las grandes ventajas de NoSQL que verás esta semana.</p>
+    </details>
+  </div>
+
+  <h3>Contenido temático</h3>
+
+  <div class="sesion">
+    <div class="tag">Sesión 1 · 2 horas</div>
+    <h4>Modelos NoSQL</h4>
+    <p>El <b>teorema CAP</b> establece que un sistema de datos distribuido no puede garantizar simultáneamente las tres propiedades siguientes; debe sacrificar una:</p>
+    <ul>
+      <li><b>Consistencia (Consistency):</b> todos los nodos ven los mismos datos al mismo tiempo.</li>
+      <li><b>Disponibilidad (Availability):</b> cada petición recibe una respuesta, aunque no sea la más reciente.</li>
+      <li><b>Tolerancia a particiones (Partition tolerance):</b> el sistema sigue funcionando aunque se pierda la comunicación entre nodos.</li>
+    </ul>
+    <p>Como las particiones de red son inevitables en un sistema distribuido, en la práctica se elige entre <b>consistencia</b> y <b>disponibilidad</b>. Las bases SQL suelen priorizar consistencia (CP); muchas NoSQL priorizan disponibilidad (AP).</p>
+    <p>Los cuatro <b>tipos de bases NoSQL</b> y sus casos de uso:</p>
+    <table class="cmp">
+      <tr><th>Tipo</th><th>Cómo guarda</th><th>Caso de uso típico</th><th>Ejemplo</th></tr>
+      <tr><td>Documental</td><td>Documentos tipo JSON, flexibles</td><td>Catálogos, perfiles, contenido</td><td>MongoDB</td></tr>
+      <tr><td>Clave-valor</td><td>Pares clave → valor, muy rápido</td><td>Caché, sesiones, carritos</td><td>Redis</td></tr>
+      <tr><td>Columnar</td><td>Por columnas, para grandes volúmenes</td><td>Series temporales, big data</td><td>Cassandra</td></tr>
+      <tr><td>Grafos</td><td>Nodos y relaciones</td><td>Redes sociales, recomendaciones</td><td>Neo4j</td></tr>
+    </table>
+    <p><b>MongoDB</b>, como ejemplo documental, guarda los datos en <b>colecciones</b> de <b>documentos</b> (similares a objetos JSON). Las operaciones básicas se conocen como <b>CRUD</b>: Create (insertar), Read (consultar), Update (actualizar) y Delete (borrar).</p>
+    <div class="card" style="margin-top:1rem;border-left:4px solid var(--azul)">
+      <b>Actividad en clase:</b> modelen una colección en MongoDB (por ejemplo, un catálogo de productos) y realicen las cuatro operaciones CRUD, además de una consulta con filtros.
+    </div>
+  </div>
+
+  <div class="sesion">
+    <div class="tag">Sesión 2 · 2 horas</div>
+    <h4>Bases de datos distribuidas</h4>
+    <p>Cuando los datos no caben en un solo servidor o se necesita alta disponibilidad, las bases se <b>distribuyen</b> entre varias máquinas mediante dos técnicas complementarias:</p>
+    <ul>
+      <li><b>Particionamiento (sharding):</b> los datos se dividen en fragmentos (shards) repartidos entre distintos servidores. Cada servidor guarda solo una parte, lo que permite escalar horizontalmente. Por ejemplo, los usuarios A-M en un servidor y N-Z en otro.</li>
+      <li><b>Replicación:</b> se hacen copias de los datos en varios nodos. Si un nodo falla, otro responde. Mejora la disponibilidad y la tolerancia a fallos.</li>
+    </ul>
+    <p>La <b>consistencia eventual</b> es un modelo común en sistemas distribuidos AP: tras una escritura, los distintos nodos pueden mostrar temporalmente datos distintos, pero <b>eventualmente</b> todos convergen al mismo valor. Es un compromiso: se acepta una breve inconsistencia a cambio de disponibilidad y rapidez.</p>
+    <p>Dos ejemplos representativos:</p>
+    <ul>
+      <li><b>Cassandra:</b> base columnar distribuida, diseñada para escribir enormes volúmenes con alta disponibilidad y sin un punto único de falla.</li>
+      <li><b>Redis:</b> base clave-valor en memoria, extremadamente rápida, ideal para caché, sesiones y datos temporales.</li>
+    </ul>
+    <div class="card" style="margin-top:1rem;border-left:4px solid var(--azul)">
+      <b>Actividad en clase:</b> resuelvan un mismo problema (por ejemplo, almacenar y consultar productos) con un enfoque SQL y con uno NoSQL, y comparen las ventajas y desventajas de cada uno.
+    </div>
+  </div>
+
+  <h3>Materiales externos de consulta</h3>
+  <div class="card">
+    <div class="recurso"><span class="tipo">Libro</span><div>Sadalage, P. y Fowler, M. <i>NoSQL Distilled</i>, Addison-Wesley. Introducción concisa a los modelos NoSQL y sus compromisos.</div></div>
+    <div class="recurso"><span class="tipo">Libro</span><div>Kleppmann, M. <i>Designing Data-Intensive Applications</i>, O'Reilly. Referencia profunda sobre sistemas distribuidos, replicación y particionamiento.</div></div>
+    <div class="recurso"><span class="tipo">Docs</span><div>Documentación oficial de <a href="https://www.mongodb.com/docs/" target="_blank" rel="noopener">MongoDB</a>, <a href="https://redis.io/docs/latest/" target="_blank" rel="noopener">Redis</a> y <a href="https://cassandra.apache.org/doc/latest/" target="_blank" rel="noopener">Apache Cassandra</a>.</div></div>
+    <div class="recurso"><span class="tipo">Curso</span><div><a href="https://learn.mongodb.com/" target="_blank" rel="noopener">MongoDB University</a>: cursos gratuitos oficiales sobre MongoDB y modelado documental.</div></div>
+    <div class="recurso"><span class="tipo">Artículo</span><div>Brewer, E. "CAP Twelve Years Later" (2012), IEEE Computer. Reflexión del autor del teorema CAP sobre su interpretación práctica.</div></div>
+  </div>
+
+  <h3>Actividades para entregar en Classroom</h3>
+
+  <!-- ACT 1 FORO -->
+  <div class="act">
+    <div class="head"><span class="num">1</span><span class="ti">Foro de mediación<small>Reflexión crítica</small></span></div>
+    <div class="body">
+      <span class="classroom">Entrega en Classroom · Foro</span>
+      <p><b>Pregunta detonadora:</b> "El teorema CAP obliga a elegir entre consistencia y disponibilidad cuando hay una partición de red. Piensa en un cajero automático: ¿preferirías que rechace tu retiro si no puede confirmar tu saldo con certeza (prioriza consistencia), o que te entregue el dinero aunque quizás no esté 100% seguro del saldo (prioriza disponibilidad)? ¿Y en el caso de un 'me gusta' en una red social? Argumenta por qué la elección correcta depende del problema."</p>
+      <h4>Instrucciones paso a paso</h4>
+      <ol class="pasos">
+        <li>Publica una respuesta inicial de 150 a 250 palabras.</li>
+        <li>Analiza al menos DOS escenarios distintos (uno donde priorizarías consistencia y otro disponibilidad) y justifica cada elección.</li>
+        <li>Relaciona tu análisis con el teorema CAP explícitamente.</li>
+        <li>Responde a dos compañeros con un ejemplo adicional o una objeción razonada.</li>
+      </ol>
+      <p><b>Ejemplo de apertura:</b> "En el caso del cajero automático priorizaría la consistencia, porque entregar dinero que el cliente no tiene sería un error irreversible; en cambio, para un 'me gusta'..."</p>
+    </div>
+  </div>
+
+  <!-- ACT 2 PYTHON -->
+  <div class="act">
+    <div class="head"><span class="num">2</span><span class="ti">Práctica en Python<small>CRUD en MongoDB desde VS Code</small></span></div>
+    <div class="body">
+      <span class="classroom">Entrega en Classroom · Enlace a GitHub + script</span>
+      <p><b>Meta integral:</b> modelar una colección documental y realizar las cuatro operaciones CRUD más una agregación, conectándote a MongoDB desde Python. Practicarás el modelo documental de forma integral.</p>
+      <h4>Opciones de conexión</h4>
+      <ul>
+        <li><b>Opción A (nube, recomendada):</b> crea una cuenta gratuita en <b>MongoDB Atlas</b>, genera un clúster gratuito y copia la cadena de conexión.</li>
+        <li><b>Opción B (sin instalar nada):</b> usa <code>mongomock</code>, que simula MongoDB en memoria. Ideal para practicar la sintaxis sin servidor.</li>
+      </ul>
+      <h4>Instrucciones paso a paso</h4>
+      <ol class="pasos">
+        <li>En VS Code, crea un entorno virtual e instala el conector: <code>pip install pymongo</code> (y <code>mongomock</code> si eliges la Opción B).</li>
+        <li>Conéctate a la base de datos y crea una colección <code>productos</code>.</li>
+        <li>Realiza las cuatro operaciones CRUD: insertar varios documentos, consultar con filtros, actualizar uno y borrar otro.</li>
+        <li>Ejecuta una agregación (equivalente al GROUP BY de SQL) para resumir por categoría.</li>
+        <li>Sube el script a GitHub con un README que explique cada operación.</li>
+      </ol>
+      <h4>Código (crud_mongo.py)</h4>
+      <pre><span class="c"># Opción B (sin servidor): descomenta estas dos líneas y comenta la conexión real</span>
+<span class="c"># import mongomock</span>
+<span class="c"># client = mongomock.MongoClient()</span>
+
+<span class="k">from</span> pymongo <span class="k">import</span> MongoClient
+client = MongoClient(<span class="s">"mongodb://localhost:27017/"</span>)   <span class="c"># o tu cadena de Atlas</span>
+
+db = client[<span class="s">"tienda"</span>]
+productos = db[<span class="s">"productos"</span>]
+productos.delete_many({})   <span class="c"># limpiar antes de empezar</span>
+
+<span class="c"># ===== CREATE: insertar documentos (flexibles, tipo JSON) =====</span>
+productos.insert_many([
+    {<span class="s">"nombre"</span>: <span class="s">"Laptop"</span>, <span class="s">"categoria"</span>: <span class="s">"Cómputo"</span>, <span class="s">"precio"</span>: <span class="s">15000</span>, <span class="s">"tags"</span>: [<span class="s">"portátil"</span>, <span class="s">"trabajo"</span>]},
+    {<span class="s">"nombre"</span>: <span class="s">"Mouse"</span>,  <span class="s">"categoria"</span>: <span class="s">"Cómputo"</span>, <span class="s">"precio"</span>: <span class="s">250</span>,   <span class="s">"tags"</span>: [<span class="s">"accesorio"</span>]},
+    {<span class="s">"nombre"</span>: <span class="s">"Silla"</span>,  <span class="s">"categoria"</span>: <span class="s">"Oficina"</span>, <span class="s">"precio"</span>: <span class="s">1800</span>,  <span class="s">"tags"</span>: [<span class="s">"ergonómica"</span>]},
+])
+print(<span class="s">"CREATE — documentos:"</span>, productos.count_documents({}))
+
+<span class="c"># ===== READ: consultar con filtros (categoría Cómputo y precio > 200) =====</span>
+<span class="k">for</span> d <span class="k">in</span> productos.find({<span class="s">"categoria"</span>: <span class="s">"Cómputo"</span>, <span class="s">"precio"</span>: {<span class="s">"$gt"</span>: <span class="s">200</span>}}):
+    print(<span class="s">"READ:"</span>, d[<span class="s">"nombre"</span>], <span class="s">"-"</span>, d[<span class="s">"precio"</span>])
+
+<span class="c"># ===== UPDATE: actualizar el precio del Mouse =====</span>
+productos.update_one({<span class="s">"nombre"</span>: <span class="s">"Mouse"</span>}, {<span class="s">"$set"</span>: {<span class="s">"precio"</span>: <span class="s">300</span>}})
+
+<span class="c"># ===== DELETE: borrar la Silla =====</span>
+productos.delete_one({<span class="s">"nombre"</span>: <span class="s">"Silla"</span>})
+print(<span class="s">"Tras UPDATE y DELETE, quedan:"</span>, productos.count_documents({}))
+
+<span class="c"># ===== Agregación: total por categoría (equivalente a GROUP BY) =====</span>
+pipeline = [{<span class="s">"$group"</span>: {<span class="s">"_id"</span>: <span class="s">"$categoria"</span>,
+                        <span class="s">"total"</span>: {<span class="s">"$sum"</span>: <span class="s">"$precio"</span>},
+                        <span class="s">"n"</span>: {<span class="s">"$sum"</span>: <span class="s">1</span>}}}]
+print(<span class="s">"Agregación:"</span>, list(productos.aggregate(pipeline)))</pre>
+      <h4>Criterios de entrega</h4>
+      <ul>
+        <li>Enlace público al repositorio de GitHub con el script.</li>
+        <li>README que explique qué hace cada operación CRUD y cómo se conecta a MongoDB.</li>
+        <li>Salida del programa mostrando las cuatro operaciones y la agregación funcionando.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ACT 3 CASO -->
+  <div class="act">
+    <div class="head"><span class="num">3</span><span class="ti">Caso práctico<small>Análisis y argumentación</small></span></div>
+    <div class="body caso" style="border-radius:0 0 14px 14px;margin:0;padding:1.3rem 1.4rem">
+      <span class="classroom">Entrega en Classroom · Documento breve</span>
+      <p><b>Situación:</b> una startup desarrolla una aplicación de comercio electrónico. Su equipo debate qué base de datos usar para distintas partes del sistema: (1) el <b>catálogo de productos</b>, donde cada producto tiene atributos muy variables (una playera tiene talla y color; un libro tiene autor y páginas); (2) el <b>carrito de compras temporal</b> de cada usuario, que debe leerse y escribirse en milisegundos y desaparecer tras la compra; (3) las <b>transacciones de pago</b>, donde la consistencia es absolutamente crítica (no puede cobrarse dos veces); y (4) un sistema de <b>"quién compró esto también compró aquello"</b> basado en relaciones entre productos y usuarios.</p>
+      <div class="pregunta-caso"><b>a)</b> Para cada uno de los cuatro componentes, recomienda un tipo de base de datos (documental, clave-valor, columnar, grafos o relacional) y justifica tu elección.</div>
+      <div class="pregunta-caso"><b>b)</b> Para las transacciones de pago, ¿priorizarías consistencia o disponibilidad según el teorema CAP? ¿Por qué una base relacional suele ser la elección aquí?</div>
+      <div class="pregunta-caso"><b>c)</b> El carrito temporal debe ser rapidísimo. Explica por qué una base clave-valor en memoria (como Redis) es más adecuada que una base relacional para este caso.</div>
+      <div class="pregunta-caso"><b>d)</b> Si la app crece a millones de usuarios en varios países, explica cómo el <b>sharding</b> y la <b>replicación</b> ayudarían a que el sistema siga siendo rápido y disponible.</div>
+    </div>
+  </div>
+
+  <!-- ACT 4 QUIZ -->
+  <div class="act">
+    <div class="head"><span class="num">4</span><span class="ti">Quiz de autoevaluación<small>5 preguntas · puntaje automático</small></span></div>
+    <div class="body">
+      <div class="quiz" data-quiz="q7">
+        <h4>Verifica lo aprendido</h4>
+        <div class="q-item" data-answer="c">
+          <div class="qt">1. El teorema CAP afirma que un sistema distribuido, ante una partición de red, debe elegir entre:</div>
+          <label><input type="radio" name="q7-1"> a) Velocidad y seguridad.</label>
+          <label><input type="radio" name="q7-1"> b) SQL y NoSQL.</label>
+          <label><input type="radio" name="q7-1"> c) Consistencia y disponibilidad.</label>
+          <label><input type="radio" name="q7-1"> d) Documentos y tablas.</label>
+        </div>
+        <div class="q-item" data-answer="b">
+          <div class="qt">2. MongoDB es un ejemplo de base de datos NoSQL de tipo:</div>
+          <label><input type="radio" name="q7-2"> a) Clave-valor.</label>
+          <label><input type="radio" name="q7-2"> b) Documental (guarda documentos tipo JSON).</label>
+          <label><input type="radio" name="q7-2"> c) Columnar.</label>
+          <label><input type="radio" name="q7-2"> d) De grafos.</label>
+        </div>
+        <div class="q-item" data-answer="d">
+          <div class="qt">3. Para un carrito de compras temporal que debe leerse y escribirse en milisegundos, el tipo más adecuado es:</div>
+          <label><input type="radio" name="q7-3"> a) Una base de grafos.</label>
+          <label><input type="radio" name="q7-3"> b) Una base columnar para big data.</label>
+          <label><input type="radio" name="q7-3"> c) Una base relacional con muchas tablas.</label>
+          <label><input type="radio" name="q7-3"> d) Una base clave-valor en memoria (como Redis).</label>
+        </div>
+        <div class="q-item" data-answer="a">
+          <div class="qt">4. El sharding (particionamiento) consiste en:</div>
+          <label><input type="radio" name="q7-4"> a) Dividir los datos en fragmentos repartidos entre varios servidores.</label>
+          <label><input type="radio" name="q7-4"> b) Hacer copias idénticas de todos los datos en cada servidor.</label>
+          <label><input type="radio" name="q7-4"> c) Borrar datos antiguos automáticamente.</label>
+          <label><input type="radio" name="q7-4"> d) Convertir NoSQL en SQL.</label>
+        </div>
+        <div class="q-item" data-answer="b">
+          <div class="qt">5. La "consistencia eventual" significa que:</div>
+          <label><input type="radio" name="q7-5"> a) Los datos nunca llegan a ser consistentes.</label>
+          <label><input type="radio" name="q7-5"> b) Tras una escritura, los nodos pueden diferir temporalmente pero eventualmente convergen al mismo valor.</label>
+          <label><input type="radio" name="q7-5"> c) La base de datos se apaga cada cierto tiempo.</label>
+          <label><input type="radio" name="q7-5"> d) Solo un servidor guarda los datos.</label>
+        </div>
+        <button class="btn" onclick="calif('q7')">Calificar quiz</button>
+        <div class="score" id="score-q7"></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section" id="reflexion">
+  <div class="eyebrow">Cierre del bloque</div>
+  <h2 class="sec">Reflexión y aplicación</h2>
+  <p class="lead">El conocimiento se consolida cuando decides conscientemente dónde usarlo. Cierra estas dos semanas planificando cómo integrarás la ingeniería de datos y las bases NoSQL en tu vida académica y profesional.</p>
+
+  <div class="card reflex">
+    <h3>Bitácora de aplicación</h3>
+    <p>Responde con honestidad. Puedes escribir aquí para ordenar tus ideas y luego trasladar tu reflexión final a Classroom.</p>
+    <label>1. En otra de tus materias o en un proyecto personal, ¿qué datos tendrías que mover desde una fuente hasta un lugar donde consultarlos? ¿Cómo diseñarías ese pipeline ETL?</label>
+    <textarea placeholder="Por ejemplo: en el proyecto de bases de datos podría construir un ETL que consuma una API y cargue los datos a SQLite..."></textarea>
+    <label>2. ¿En qué situación de un proyecto real elegirías una base NoSQL sobre una relacional? ¿Qué tipo (documental, clave-valor, columnar, grafos) usarías y por qué?</label>
+    <textarea placeholder="Escribe tu reflexión..."></textarea>
+    <label>3. El teorema CAP te obliga a tomar decisiones de compromiso. ¿Cómo cambia tu forma de pensar sobre los sistemas al saber que "no se puede tener todo"?</label>
+    <textarea placeholder="Escribe tu reflexión..."></textarea>
+    <label>4. Define una meta concreta y medible para las próximas semanas que profundice algo visto aquí (por ejemplo, construir un pipeline que consuma una API pública, o modelar una base en MongoDB Atlas).</label>
+    <textarea placeholder="Por ejemplo: implementar un pipeline ETL documentado en mi repositorio de GitHub que consuma una API pública..."></textarea>
+    <button class="btn ghost" onclick="guardarReflexion()">Guardar mi bitácora en este dispositivo</button>
+    <div id="reflex-msg" style="margin-top:.8rem;font-family:'JetBrains Mono',monospace;font-size:.85rem;color:#a9e5c0"></div>
+  </div>
+
+  <div class="card">
+    <h4>Autoevaluación del bloque: ¿estás listo para avanzar?</h4>
+    <p>Deberías poder responder con seguridad a estas preguntas antes de la Semana 8:</p>
+    <ul>
+      <li>¿Puedo explicar la diferencia entre ETL y ELT, y entre batch y streaming, con un ejemplo propio?</li>
+      <li>¿Sé distinguir cuándo conviene un data warehouse, un data lake o un lakehouse?</li>
+      <li>¿Puedo construir un pipeline ETL en Python que cargue datos a SQLite con un esquema estrella?</li>
+      <li>¿Entiendo el teorema CAP y sé elegir el tipo de base NoSQL adecuado para un problema dado?</li>
+      <li>¿Puedo realizar operaciones CRUD en MongoDB y explicar qué son el sharding y la replicación?</li>
+    </ul>
+  </div>
+
+  <div class="card" style="border-left:4px solid var(--acento)">
+    <h4>Tarea integradora del bloque</h4>
+    <p><b>Semana 6 —</b> Implementa un pipeline ETL documentado que consuma una <b>API pública</b> (por ejemplo DummyJSON u Open Food Facts) y almacene los datos estructurados en SQLite. Incluye las tres fases comentadas y un README.</p>
+    <p><b>Semana 7 —</b> Diseña y justifica el modelo de datos (relacional o NoSQL) para un caso propuesto, con una <b>implementación mínima</b>. Argumenta tu elección con base en el teorema CAP y el tipo de datos.</p>
+  </div>
+</section>
+
+<footer>
+  <img src="data:image/png;base64,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flrOlIvlVxIvfT/Q8L9DbpR4efnHco7Ep/GPlUNkb4lXDDaQZl8+J4T0O67/Z2eLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAABacu8//T+wJF0i54bpgwAAAABJRU5ErkJggg==" alt="UNE">
+  <p><strong>Universidad de Especialidades UNE · Plantel Centro</strong></p>
+  <p>Optativa III: Ciencia de Datos · Ingeniería en Computación · 9.º semestre</p>
+  <p style="margin-top:.8rem;opacity:.8">Guía interactiva de estudio diseñada con metodología constructivista, pedagogía activa y aprendizaje basado en problemas. Material educativo para uso académico. Las actividades marcadas se entregan en Google Classroom.</p>
+</footer>
+</main>
+</div>
+<button class="top" id="topbtn" aria-label="Volver arriba" onclick="window.scrollTo({top:0})">↑</button>
+
+<script>
+function calif(id){
+  const box=document.querySelector('[data-quiz="'+id+'"]');
+  const items=box.querySelectorAll('.q-item');
+  let correctas=0, contestadas=0;
+  items.forEach(item=>{
+    const ok=item.dataset.answer;
+    const labels=item.querySelectorAll('label');
+    const idx={a:0,b:1,c:2,d:3}[ok];
+    let elegido=-1;
+    labels.forEach((l,i)=>{ l.classList.remove('correct','wrong'); if(l.querySelector('input').checked) elegido=i; });
+    if(elegido>=0) contestadas++;
+    if(elegido===idx){correctas++; labels[idx].classList.add('correct');}
+    else{ if(elegido>=0) labels[elegido].classList.add('wrong'); labels[idx].classList.add('correct'); }
+  });
+  const total=items.length, pct=Math.round(correctas/total*100);
+  const s=document.getElementById('score-'+id);
+  let msg='Puntaje: '+correctas+' / '+total+'  ('+pct+'%)';
+  if(contestadas<total) msg='Responde todas las preguntas. '+msg;
+  else if(pct===100) msg='Excelente. Dominas el tema. '+msg;
+  else if(pct>=60) msg='Buen trabajo. Repasa lo marcado en rojo. '+msg;
+  else msg='Conviene repasar el contenido de la semana. '+msg;
+  s.textContent=msg; s.classList.add('show');
+}
+function guardarReflexion(){
+  const areas=document.querySelectorAll('.reflex textarea');
+  const data=[...areas].map(a=>a.value);
+  try{ localStorage.setItem('optativa3_s67_reflexion', JSON.stringify(data));
+    document.getElementById('reflex-msg').textContent='Bitácora guardada en este navegador. Recuerda trasladar tu versión final a Classroom.';
+  }catch(e){ document.getElementById('reflex-msg').textContent='No se pudo guardar automáticamente. Copia tu texto manualmente.'; }
+}
+window.addEventListener('load',()=>{
+  try{ const raw=localStorage.getItem('optativa3_s67_reflexion');
+    if(raw){const data=JSON.parse(raw);document.querySelectorAll('.reflex textarea').forEach((a,i)=>{if(data[i])a.value=data[i];});}
+  }catch(e){}
+});
+const secciones=[...document.querySelectorAll('main section[id]')];
+const enlaces=[...document.querySelectorAll('#toc a')];
+const topbtn=document.getElementById('topbtn');
+function onScroll(){
+  let actual='';
+  secciones.forEach(s=>{ if(window.scrollY>=s.offsetTop-120) actual=s.id; });
+  enlaces.forEach(a=>{ a.classList.toggle('on', a.getAttribute('href')==='#'+actual); });
+  topbtn.classList.toggle('show', window.scrollY>500);
+}
+window.addEventListener('scroll',onScroll); onScroll();
+enlaces.forEach(a=>a.addEventListener('click',()=>document.querySelector('.side').classList.remove('open')));
+</script>
+</body>
+</html>
