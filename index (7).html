@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proyecto Integrador — Ciencia de Datos (Semanas 1-7) | UNE Plantel Centro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#1e2a6b; --azul-800:#18225a; --azul-900:#111a45;
+  --rojo:#e2231a; --rojo-700:#c01810;
+  --papel:#f5f3ec; --papel-2:#ece8dc; --tinta:#1a1c22; --tinta-suave:#4a4d57;
+  --linea:#d8d3c4; --blanco:#ffffff;
+  --ok:#1f7a4d; --acento:#e8a200;
+  --sombra:0 1px 2px rgba(17,26,69,.06),0 8px 30px rgba(17,26,69,.08);
+  --radio:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--tinta);background:var(--papel);
+  background-image:linear-gradient(var(--linea) 1px,transparent 1px),linear-gradient(90deg,var(--linea) 1px,transparent 1px);
+  background-size:100% 3.5rem, 3.5rem 100%;background-position:0 -1px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+img{max-width:100%;display:block}
+a{color:var(--azul);text-decoration:none}
+a:hover{text-decoration:underline}
+code,kbd,.mono{font-family:'JetBrains Mono',monospace}
+.wrap{display:grid;grid-template-columns:290px 1fr;max-width:1400px;margin:0 auto;gap:0}
+.side{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;background:var(--azul-900);color:#dfe3f2;padding:0;border-right:3px solid var(--rojo)}
+.main{min-width:0;padding:0}
+.brand{padding:1.6rem 1.4rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.1);position:sticky;top:0;background:var(--azul-900);z-index:2}
+.brand img{width:96px;margin-bottom:.8rem;background:#fff;padding:.5rem .7rem;border-radius:10px}
+.brand .mat{font-family:'Fraunces',serif;font-weight:900;font-size:1.05rem;color:#fff;line-height:1.15;letter-spacing:-.01em}
+.brand .sub{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#8b93c4;margin-top:.35rem}
+nav.toc{padding:1rem .8rem 3rem}
+nav.toc .grp{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:#7f88bd;margin:1.3rem .6rem .5rem}
+nav.toc a{display:block;color:#c7ccea;padding:.42rem .7rem;border-radius:8px;font-size:.9rem;font-weight:500;border-left:2px solid transparent}
+nav.toc a:hover{background:rgba(255,255,255,.06);text-decoration:none;color:#fff}
+nav.toc a.on{background:var(--rojo);color:#fff;border-left-color:#fff}
+nav.toc a .n{font-family:'JetBrains Mono',monospace;font-size:.72rem;opacity:.7;margin-right:.5rem}
+.hero{position:relative;overflow:hidden;background:var(--azul);color:#fff;padding:3.5rem 3rem 3rem;border-bottom:4px solid var(--rojo)}
+.hero::before{content:"";position:absolute;inset:0;opacity:.14;background-image:radial-gradient(circle at 1px 1px,#fff 1.2px,transparent 0);background-size:22px 22px}
+.hero .kick{position:relative;font-family:'JetBrains Mono',monospace;font-size:.78rem;letter-spacing:.28em;text-transform:uppercase;color:#f3b6b2}
+.hero h1{position:relative;font-family:'Fraunces',serif;font-weight:900;font-size:clamp(2rem,4.6vw,3.4rem);line-height:1.02;letter-spacing:-.02em;margin:.7rem 0 .8rem;max-width:24ch}
+.hero p{position:relative;max-width:62ch;color:#d5d9f0;font-size:1.05rem}
+.hero .meta{position:relative;display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.6rem}
+.hero .meta span{font-family:'JetBrains Mono',monospace;font-size:.76rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:.4rem .7rem;border-radius:999px}
+.section{padding:3rem 3rem;border-bottom:1px solid var(--linea);scroll-margin-top:1rem}
+.section-alt{background:var(--papel-2)}
+.eyebrow{display:inline-flex;align-items:center;gap:.6rem;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--rojo-700);font-weight:700;margin-bottom:.7rem}
+.eyebrow::before{content:"";width:26px;height:2px;background:var(--rojo)}
+h2.sec{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(1.6rem,3vw,2.3rem);letter-spacing:-.02em;line-height:1.08;margin-bottom:.4rem}
+h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.35rem;margin:2rem 0 .7rem;color:var(--azul-900)}
+h4{font-size:1.05rem;font-weight:700;margin:1.4rem 0 .5rem;color:var(--azul-800)}
+.section p{margin:.7rem 0;max-width:78ch}
+.section ul,.section ol{margin:.7rem 0 .7rem 1.3rem;max-width:78ch}
+.section li{margin:.35rem 0}
+.lead{font-size:1.12rem;color:var(--tinta-suave)}
+.card{background:var(--blanco);border:1px solid var(--linea);border-radius:var(--radio);padding:1.5rem 1.6rem;box-shadow:var(--sombra);margin:1.2rem 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+ol.pasos{counter-reset:p;list-style:none;margin-left:0}
+ol.pasos li{counter-increment:p;position:relative;padding:.55rem 0 .55rem 2.6rem;border-bottom:1px dashed var(--linea)}
+ol.pasos li:last-child{border-bottom:none}
+ol.pasos li::before{content:counter(p);position:absolute;left:0;top:.5rem;width:1.7rem;height:1.7rem;background:var(--papel-2);border:1px solid var(--linea);color:var(--azul);font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.8rem;display:grid;place-items:center;border-radius:50%}
+/* Fases KDD timeline */
+.kdd{display:grid;grid-template-columns:repeat(5,1fr);gap:.8rem;margin:1.3rem 0}
+.kdd .fase{background:var(--blanco);border:1px solid var(--linea);border-top:4px solid var(--azul);border-radius:10px;padding:.9rem .8rem;box-shadow:var(--sombra)}
+.kdd .fase .n{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--rojo-700);font-weight:700}
+.kdd .fase h5{font-size:.92rem;color:var(--azul-900);margin:.2rem 0 .3rem;font-weight:700}
+.kdd .fase p{font-size:.78rem;color:var(--tinta-suave);margin:0}
+.kdd .fase .sem{display:inline-block;margin-top:.4rem;font-size:.66rem;font-family:'JetBrains Mono',monospace;background:var(--papel-2);border:1px solid var(--linea);border-radius:5px;padding:.1rem .35rem;color:var(--azul)}
+/* Proyecto card */
+.proyecto{border:1px solid var(--linea);border-radius:var(--radio);margin:1.6rem 0;overflow:hidden;background:var(--blanco);box-shadow:var(--sombra)}
+.proyecto > .head{display:flex;align-items:center;gap:1rem;padding:1.1rem 1.5rem;background:var(--azul);color:#fff}
+.proyecto > .head .num{font-family:'Fraunces',serif;font-weight:900;font-size:1.6rem;background:var(--rojo);width:3rem;height:3rem;display:grid;place-items:center;border-radius:10px;flex:0 0 auto}
+.proyecto > .head .ti{font-weight:700;font-size:1.2rem;line-height:1.15}
+.proyecto > .head .ti small{display:block;font-weight:500;font-size:.72rem;opacity:.85;text-transform:uppercase;letter-spacing:.1em;font-family:'JetBrains Mono',monospace;margin-top:.2rem}
+.proyecto > .body{padding:1.4rem 1.5rem}
+.fuente{display:inline-flex;align-items:center;gap:.4rem;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--azul-800);border-radius:6px;padding:.25rem .6rem;margin:.15rem .3rem .15rem 0}
+.meta-proj{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin:1.1rem 0}
+.meta-proj .box{background:var(--papel-2);border:1px solid var(--linea);border-radius:10px;padding:.8rem 1rem}
+.meta-proj .box h5{font-size:.74rem;text-transform:uppercase;letter-spacing:.1em;color:var(--rojo-700);font-family:'JetBrains Mono',monospace;margin-bottom:.35rem}
+.meta-proj .box p,.meta-proj .box ul{font-size:.9rem;margin:0}
+.meta-proj .box ul{margin-left:1.1rem}
+.datoslink{display:flex;gap:.7rem;align-items:flex-start;padding:.6rem 0;border-bottom:1px dashed var(--linea);font-size:.9rem}
+.datoslink:last-child{border-bottom:none}
+.datoslink .tipo{flex:0 0 auto;font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;background:var(--ok);color:#fff;padding:.18rem .45rem;border-radius:5px;margin-top:.1rem}
+.nivel{float:right;font-family:'JetBrains Mono',monospace;font-size:.68rem;padding:.2rem .55rem;border-radius:999px;border:1px solid rgba(255,255,255,.3);color:#fff}
+table.cmp{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.88rem;background:var(--blanco);border-radius:10px;overflow:hidden;box-shadow:var(--sombra)}
+table.cmp th{background:var(--azul);color:#fff;text-align:left;padding:.7rem .9rem;font-size:.8rem}
+table.cmp td{padding:.6rem .9rem;border-bottom:1px solid var(--linea);vertical-align:top}
+table.cmp tr:last-child td{border-bottom:none}
+table.cmp td:first-child{font-weight:600;color:var(--azul-900)}
+.callout{border-left:4px solid var(--acento);background:#fdf8ea;border-radius:0 10px 10px 0;padding:1rem 1.2rem;margin:1.2rem 0}
+.callout.ok{border-left-color:var(--ok);background:#eef6f0}
+.callout.rojo{border-left-color:var(--rojo);background:#fdf2f1}
+.btn{display:inline-block;background:var(--rojo);color:#fff;font-weight:700;font-family:'Inter';border:none;border-radius:9px;padding:.75rem 1.5rem;cursor:pointer;font-size:.95rem;text-decoration:none}
+.btn:hover{background:var(--rojo-700);text-decoration:none}
+.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.35);color:#fff}
+.reflex{background:linear-gradient(135deg,var(--azul),var(--azul-900));color:#fff;border:none}
+.reflex h3{color:#fff}
+.reflex textarea{width:100%;min-height:70px;border-radius:10px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.07);color:#fff;padding:.8rem;font-family:'Inter';font-size:.95rem;resize:vertical;margin:.3rem 0 1rem}
+.reflex textarea::placeholder{color:#aab2dd}
+.reflex label{font-weight:600;display:block;margin-bottom:.3rem}
+.reflex select,.reflex input{width:100%;padding:.6rem;border-radius:8px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.07);color:#fff;font-family:'Inter';margin:.2rem 0 1rem;font-size:.95rem}
+.reflex select option{color:#111}
+footer{background:var(--azul-900);color:#aeb6dd;padding:2.4rem 3rem;font-size:.86rem}
+footer strong{color:#fff}
+footer img{width:70px;background:#fff;border-radius:8px;padding:.4rem .5rem;margin-bottom:.8rem}
+.top{position:fixed;right:1.2rem;bottom:1.2rem;background:var(--azul);color:#fff;width:2.8rem;height:2.8rem;border-radius:50%;display:grid;place-items:center;box-shadow:var(--sombra);font-size:1.2rem;z-index:20;opacity:0;pointer-events:none;transition:.2s;border:none;cursor:pointer}
+.top.show{opacity:1;pointer-events:auto}
+.menu-btn{display:none}
+@media(max-width:900px){
+  .wrap{grid-template-columns:1fr}
+  .side{position:fixed;left:0;top:0;width:280px;z-index:50;transform:translateX(-100%);transition:.25s;box-shadow:0 0 40px rgba(0,0,0,.4)}
+  .side.open{transform:none}
+  .menu-btn{display:grid;place-items:center;position:fixed;top:1rem;left:1rem;z-index:60;width:2.9rem;height:2.9rem;background:var(--azul);color:#fff;border:none;border-radius:10px;font-size:1.3rem;box-shadow:var(--sombra)}
+  .hero,.section,footer{padding-left:1.3rem;padding-right:1.3rem}
+  .grid2,.grid3,.meta-proj,.kdd{grid-template-columns:1fr}
+  .hero{padding-top:4.5rem}
+  table.cmp{font-size:.78rem}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto;transition:none!important}}
+</style>
+</head>
+<body>
+<button class="menu-btn" onclick="document.querySelector('.side').classList.toggle('open')" aria-label="Menú">☰</button>
+<div class="wrap">
+<aside class="side">
+  <div class="brand">
+    <img src="data:image/png;base64,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flrOlIvlVxIvfT/Q8L9DbpR4efnHco7Ep/GPlUNkb4lXDDaQZl8+J4T0O67/Z2eLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAABacu8//T+wJF0i54bpgwAAAABJRU5ErkJggg==" alt="Universidad de Especialidades UNE">
+    <div class="mat">Proyecto Integrador<br>Ciencia de Datos</div>
+    <div class="sub">UNE · Plantel Centro</div>
+  </div>
+  <nav class="toc" id="toc">
+    <div class="grp">Marco</div>
+    <a href="#portada"><span class="n">00</span>Presentación</a>
+    <a href="#kdd"><span class="n">·</span>El ciclo KDD</a>
+    <a href="#lineamientos"><span class="n">·</span>Lineamientos</a>
+    <div class="grp">Los 5 proyectos</div>
+    <a href="#p1"><span class="n">01</span>INEGI · Socioeconómico</a>
+    <a href="#p2"><span class="n">02</span>Google · Movilidad urbana</a>
+    <a href="#p3"><span class="n">03</span>Amazon · Reseñas</a>
+    <a href="#p4"><span class="n">04</span>Salud · OWID/OMS</a>
+    <a href="#p5"><span class="n">05</span>Clima · Repositorios</a>
+    <div class="grp">Entrega</div>
+    <a href="#equipos"><span class="n">·</span>Formación de equipos</a>
+    <a href="#protocolo"><span class="n">·</span>Protocolo (tarea)</a>
+    <a href="#rubrica"><span class="n">·</span>Rúbrica</a>
+  </nav>
+</aside>
+<main class="main">
+<section class="hero" id="portada">
+  <div class="kick">Ingeniería en Computación · 9.º Semestre · Semanas 1 a 7</div>
+  <h1>Proyecto Integrador de Ciencia de Datos</h1>
+  <p>Del dato crudo al conocimiento accionable. Este proyecto reúne todo lo aprendido —estadística, limpieza, visualización, ingeniería de datos y bases NoSQL— en un ciclo KDD completo sobre un conjunto de datos real y masivo de una fuente pública. Cada equipo define su propio problema, lo resuelve con rigor metodológico y defiende sus hallazgos.</p>
+  <div class="meta">
+    <span>Dataset real y masivo</span>
+    <span>Ciclo KDD completo</span>
+    <span>5 equipos · 5 proyectos</span>
+    <span>Entregable: protocolo + dataset validado</span>
+  </div>
+</section>
+
+<section class="section" id="kdd">
+  <div class="eyebrow">Marco metodológico</div>
+  <h2 class="sec">El ciclo KDD como columna vertebral</h2>
+  <p class="lead">Todo proyecto de ciencia de datos serio sigue un proceso. El <b>KDD (Knowledge Discovery in Databases)</b> es el marco que estructura tu trabajo: cada una de sus cinco etapas corresponde directamente a las competencias que desarrollaste en las Semanas 1 a 7.</p>
+
+  <div class="kdd">
+    <div class="fase">
+      <div class="n">01</div>
+      <h5>Selección</h5>
+      <p>Elegir la fuente y el subconjunto de datos relevantes para el problema.</p>
+      <span class="sem">Sem. 1</span>
+    </div>
+    <div class="fase">
+      <div class="n">02</div>
+      <h5>Preprocesamiento</h5>
+      <p>Limpiar: nulos, duplicados, tipos, valores atípicos e imposibles.</p>
+      <span class="sem">Sem. 4</span>
+    </div>
+    <div class="fase">
+      <div class="n">03</div>
+      <h5>Transformación</h5>
+      <p>Normalizar, codificar, crear variables y modelar para analítica.</p>
+      <span class="sem">Sem. 4 · 6</span>
+    </div>
+    <div class="fase">
+      <div class="n">04</div>
+      <h5>Minería / Análisis</h5>
+      <p>Estadística, pruebas de hipótesis, correlación y visualización.</p>
+      <span class="sem">Sem. 2 · 3 · 5</span>
+    </div>
+    <div class="fase">
+      <div class="n">05</div>
+      <h5>Interpretación</h5>
+      <p>Extraer conocimiento, comunicarlo y recomendar acciones.</p>
+      <span class="sem">Sem. 5</span>
+    </div>
+  </div>
+
+  <div class="callout">
+    <b>Dónde entra cada semana.</b> Tu proyecto debe evidenciar las siete competencias: la <b>ingeniería de datos (Semana 6)</b> aparece al construir el pipeline que extrae y carga los datos a un almacén; las <b>bases NoSQL (Semana 7)</b> cuando justifiques y, de ser pertinente, implementes el almacenamiento (relacional o documental) más adecuado para tu volumen y estructura de datos.
+  </div>
+
+  <h3>Qué distingue a este proyecto</h3>
+  <div class="grid3">
+    <div class="card"><h4>Dataset real y grande</h4><p>No datasets de juguete. Trabajarás con fuentes públicas de gran escala (cientos de miles a millones de registros) que exigen decisiones reales de ingeniería.</p></div>
+    <div class="card"><h4>Problema propio</h4><p>Cada equipo formula su pregunta de investigación. No se evalúa seguir una receta, sino el razonamiento para definir y resolver un problema genuino.</p></div>
+    <div class="card"><h4>Métricas de éxito</h4><p>Antes de analizar, defines cómo sabrás si tu proyecto tuvo éxito. Esto te obliga a pensar como un profesional, no como alguien que solo ejecuta código.</p></div>
+  </div>
+</section>
+
+<section class="section section-alt" id="lineamientos">
+  <div class="eyebrow">Lineamientos generales</div>
+  <h2 class="sec">Reglas del proyecto integrador</h2>
+  <p class="lead">Estos lineamientos aplican a los cinco proyectos. Léelos con tu equipo antes de elegir.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h4>Requisitos del dataset</h4>
+      <ul>
+        <li><b>Público y de gran escala:</b> mínimo decenas de miles de registros; idealmente cientos de miles o más.</li>
+        <li><b>Fuente verificable:</b> de un repositorio oficial o reconocido (INEGI, Google, Amazon, organismos de investigación, portales de datos abiertos).</li>
+        <li><b>Con "suciedad" real:</b> debe requerir limpieza genuina (nulos, formatos, atípicos), no venir ya depurado.</li>
+        <li><b>Documentado:</b> con diccionario de datos o metadatos que expliquen las variables.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>El proyecto debe evidenciar</h4>
+      <ul>
+        <li><b>Estadística (Sem. 2-3):</b> descriptiva, inferencia o pruebas de hipótesis.</li>
+        <li><b>Limpieza (Sem. 4):</b> pipeline de preprocesamiento documentado.</li>
+        <li><b>Transformación (Sem. 4):</b> features, codificación o normalización.</li>
+        <li><b>Visualización (Sem. 5):</b> al menos cuatro gráficos justificados y honestos.</li>
+        <li><b>Ingeniería (Sem. 6):</b> pipeline de carga a una base (SQLite u otra).</li>
+        <li><b>NoSQL (Sem. 7):</b> justificación del modelo de datos elegido.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout rojo">
+    <b>Validación obligatoria del dataset.</b> Antes de comprometerte con un proyecto, debes <b>descargar una muestra y abrirla</b>: confirmar que se puede acceder, que tiene el volumen prometido, que contiene las variables que necesitas y que efectivamente requiere limpieza. Un proyecto no se aprueba sobre un dataset que el equipo no ha abierto.
+  </div>
+
+  <h3>Entregables del proyecto integrador</h3>
+  <table class="cmp">
+    <tr><th>Momento</th><th>Entregable</th><th>Formato</th></tr>
+    <tr><td>Esta etapa (arranque)</td><td>Protocolo del proyecto (1-2 páginas) + dataset seleccionado y validado</td><td>Documento + enlace/muestra del dataset</td></tr>
+    <tr><td>Desarrollo</td><td>Pipeline de limpieza y transformación documentado</td><td>Notebook / repositorio GitHub</td></tr>
+    <tr><td>Cierre</td><td>Informe visual con hallazgos (storytelling) y presentación</td><td>Notebook + exposición</td></tr>
+  </table>
+  <p>Esta guía se centra en el <b>primer entregable</b>: elegir el proyecto, definir el problema, y entregar el <b>protocolo</b> con el dataset validado.</p>
+</section>
+<section class="section" id="proyectos-intro">
+  <div class="eyebrow">Catálogo de proyectos</div>
+  <h2 class="sec">Cinco proyectos, cinco fuentes de datos reales</h2>
+  <p class="lead">Cada equipo elige uno de los cinco proyectos siguientes. Todos exigen recorrer el ciclo KDD completo, pero difieren en dominio, tipo de datos y retos técnicos. Elige según el interés de tu equipo y el reto que quieran asumir.</p>
+  <div class="callout ok">
+    <b>Cómo leer cada proyecto.</b> Para cada uno encontrarás: la fuente de datos (con enlaces reales), una descripción del conjunto, un problema sugerido que puedes adoptar o adaptar, las variables clave, ejemplos de preguntas de investigación, métricas de éxito propuestas y cómo el proyecto activa cada una de las siete semanas.
+  </div>
+</section>
+
+<!-- ============ PROYECTO 1 ============ -->
+<section class="section" id="p1">
+  <div class="proyecto">
+    <div class="head">
+      <span class="num">1</span>
+      <span class="ti">Radiografía socioeconómica de México<small>Fuente: INEGI · Datos abiertos</small>
+      <span class="nivel">Dominio: social / demográfico</span></span>
+    </div>
+    <div class="body">
+      <p>El <b>INEGI</b> publica microdatos de censos y encuestas que describen a millones de hogares y personas en México. Un proyecto sobre esta fuente conecta la ciencia de datos con la realidad social del país: desigualdad, empleo, educación, acceso a servicios.</p>
+
+      <h4>Fuentes de datos</h4>
+      <div class="card" style="margin-top:.5rem">
+        <div class="datoslink"><span class="tipo">Microdatos</span><div><a href="https://www.inegi.org.mx/programas/enoe/15ymas/" target="_blank" rel="noopener">ENOE — Encuesta Nacional de Ocupación y Empleo</a>: microdatos trimestrales de empleo, ingresos y ocupación. Cientos de miles de registros por trimestre.</div></div>
+        <div class="datoslink"><span class="tipo">Microdatos</span><div><a href="https://www.inegi.org.mx/programas/ccpv/2020/" target="_blank" rel="noopener">Censo de Población y Vivienda 2020</a>: microdatos de vivienda y población a nivel manzana y persona.</div></div>
+        <div class="datoslink"><span class="tipo">Portal</span><div><a href="https://www.inegi.org.mx/datosabiertos/" target="_blank" rel="noopener">INEGI Datos Abiertos</a> y <a href="https://datos.gob.mx/" target="_blank" rel="noopener">datos.gob.mx</a>: catálogo general de datasets descargables en CSV.</div></div>
+      </div>
+
+      <div class="meta-proj">
+        <div class="box"><h5>Problema sugerido</h5><p>Analizar la relación entre el nivel educativo y el ingreso laboral por entidad federativa, e identificar las brechas de género en el empleo formal.</p></div>
+        <div class="box"><h5>Variables clave</h5><ul><li>Nivel educativo, edad, sexo</li><li>Ingreso mensual, horas trabajadas</li><li>Tipo de empleo (formal/informal)</li><li>Entidad federativa</li></ul></div>
+      </div>
+
+      <h4>Ejemplos de preguntas de investigación</h4>
+      <ul>
+        <li>¿Qué tan fuerte es la relación entre años de escolaridad e ingreso, y varía entre estados ricos y pobres?</li>
+        <li>¿Existe una diferencia estadísticamente significativa en el ingreso entre hombres y mujeres con la misma escolaridad?</li>
+        <li>¿Qué entidades concentran mayor empleo informal y cómo se relaciona con el nivel educativo?</li>
+      </ul>
+
+      <h4>Métricas de éxito propuestas</h4>
+      <ul>
+        <li>Cuantificar la brecha salarial de género (en %) controlando por escolaridad, con su intervalo de confianza.</li>
+        <li>Obtener un coeficiente de correlación escolaridad-ingreso por estado y un ranking defendible.</li>
+        <li>Un tablero con al menos cuatro visualizaciones que un no especialista pueda interpretar.</li>
+      </ul>
+
+      <h4>Cómo recorre las 7 semanas</h4>
+      <table class="cmp">
+        <tr><th>Reto técnico del proyecto</th><th>Semana</th></tr>
+        <tr><td>Los microdatos vienen en archivos enormes de ancho fijo con códigos; hay que limpiarlos y recodificarlos.</td><td>4</td></tr>
+        <tr><td>Prueba de hipótesis sobre la brecha salarial; correlación escolaridad-ingreso.</td><td>2 · 3</td></tr>
+        <tr><td>Mapas y gráficos comparativos por entidad.</td><td>5</td></tr>
+        <tr><td>Pipeline que carga los microdatos limpios a una base para consultarlos por estado.</td><td>6 · 7</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROYECTO 2 ============ -->
+<section class="section section-alt" id="p2">
+  <div class="proyecto">
+    <div class="head">
+      <span class="num">2</span>
+      <span class="ti">Movilidad urbana a gran escala<small>Fuente: Google BigQuery · Datasets públicos</small>
+      <span class="nivel">Dominio: urbano / big data</span></span>
+    </div>
+    <div class="body">
+      <p>Google aloja <b>datasets públicos masivos</b> consultables con SQL en BigQuery, muchos de ellos con cientos de millones de registros. El dataset de viajes en taxi de Nueva York es un clásico de la ciencia de datos: cada fila es un viaje con origen, destino, tarifa, propinas y tiempos. Es el escenario ideal para experimentar el verdadero "big data".</p>
+
+      <h4>Fuentes de datos</h4>
+      <div class="card" style="margin-top:.5rem">
+        <div class="datoslink"><span class="tipo">BigQuery</span><div><a href="https://console.cloud.google.com/marketplace/product/city-of-new-york/nyc-tlc-trips" target="_blank" rel="noopener">NYC Taxi &amp; Limousine Trips</a> en Google Cloud Marketplace: cientos de millones de viajes, consultables gratis con la capa gratuita de BigQuery.</div></div>
+        <div class="datoslink"><span class="tipo">Descarga</span><div><a href="https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page" target="_blank" rel="noopener">NYC TLC Trip Record Data</a>: los mismos datos en archivos Parquet/CSV mensuales descargables directamente.</div></div>
+        <div class="datoslink"><span class="tipo">Portal</span><div><a href="https://cloud.google.com/bigquery/public-data" target="_blank" rel="noopener">Google BigQuery Public Datasets</a>: catálogo con GDELT (noticias mundiales), datos meteorológicos, Wikipedia y más.</div></div>
+      </div>
+
+      <div class="meta-proj">
+        <div class="box"><h5>Problema sugerido</h5><p>Determinar qué factores (hora, día, distancia, zona) predicen mejor el monto de la propina, y detectar los patrones de demanda por hora y zona de la ciudad.</p></div>
+        <div class="box"><h5>Variables clave</h5><ul><li>Fecha/hora de recogida y bajada</li><li>Distancia, duración del viaje</li><li>Tarifa, propina, método de pago</li><li>Zona de origen y destino</li></ul></div>
+      </div>
+
+      <h4>Ejemplos de preguntas de investigación</h4>
+      <ul>
+        <li>¿A qué horas y en qué zonas hay mayor demanda de viajes? ¿Cómo cambia entre semana y fin de semana?</li>
+        <li>¿El porcentaje de propina se relaciona con la distancia, la hora o el método de pago?</li>
+        <li>¿Se puede construir un modelo simple que estime la tarifa a partir de la distancia y la zona?</li>
+      </ul>
+
+      <h4>Métricas de éxito propuestas</h4>
+      <ul>
+        <li>Un modelo de regresión tarifa-distancia con su R² y la interpretación de la pendiente.</li>
+        <li>Mapas de calor de demanda por hora y zona que revelen patrones accionables.</li>
+        <li>Procesar al menos un mes completo de datos (millones de viajes) con un pipeline reproducible.</li>
+      </ul>
+
+      <h4>Cómo recorre las 7 semanas</h4>
+      <table class="cmp">
+        <tr><th>Reto técnico del proyecto</th><th>Semana</th></tr>
+        <tr><td>El volumen exige consultar con SQL en BigQuery o procesar por lotes; hay viajes con datos imposibles (distancias de 0, tarifas negativas) que limpiar.</td><td>4 · 6</td></tr>
+        <tr><td>Regresión tarifa-distancia; correlación propina-factores; pruebas entre grupos (día/noche).</td><td>2 · 3</td></tr>
+        <tr><td>Mapas de calor y series temporales de demanda.</td><td>5</td></tr>
+        <tr><td>Pipeline de extracción desde BigQuery y carga a un almacén local para análisis.</td><td>6 · 7</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+<!-- ============ PROYECTO 3 ============ -->
+<section class="section" id="p3">
+  <div class="proyecto">
+    <div class="head">
+      <span class="num">3</span>
+      <span class="ti">La voz del consumidor: reseñas a escala<small>Fuente: Amazon Reviews · Repositorios de investigación</small>
+      <span class="nivel">Dominio: e-commerce / texto</span></span>
+    </div>
+    <div class="body">
+      <p>Las reseñas de productos de <b>Amazon</b> constituyen uno de los mayores corpus públicos de opinión del mundo: cientos de millones de reseñas con calificación, texto, producto y fecha. Permiten estudiar el comportamiento del consumidor, la relación entre precio y satisfacción, y preparan el terreno para el análisis de texto.</p>
+
+      <h4>Fuentes de datos</h4>
+      <div class="card" style="margin-top:.5rem">
+        <div class="datoslink"><span class="tipo">Investigación</span><div><a href="https://amazon-reviews-2023.github.io/" target="_blank" rel="noopener">Amazon Reviews 2023 (UCSD)</a>: más de 570 millones de reseñas con metadatos de producto, por categorías. Dataset académico abierto.</div></div>
+        <div class="datoslink"><span class="tipo">Kaggle</span><div><a href="https://www.kaggle.com/datasets/karkavelrajaj/amazon-sales-dataset" target="_blank" rel="noopener">Amazon Sales Dataset</a>: versión manejable (1,465 productos con precio, descuento, rating) para empezar; escalable a los corpus grandes.</div></div>
+        <div class="datoslink"><span class="tipo">Alternativa</span><div><a href="https://world.openfoodfacts.org/data" target="_blank" rel="noopener">Open Food Facts</a>: base colaborativa de ~3 millones de productos con datos nutricionales, si prefieren catálogo a reseñas.</div></div>
+      </div>
+
+      <div class="meta-proj">
+        <div class="box"><h5>Problema sugerido</h5><p>Determinar si el precio de un producto predice su calificación (¿lo caro es mejor?) y qué factores se asocian con que un producto reciba muchas reseñas.</p></div>
+        <div class="box"><h5>Variables clave</h5><ul><li>Precio real y con descuento</li><li>Calificación (rating) y número de reseñas</li><li>Categoría del producto</li><li>Texto de la reseña (opcional)</li></ul></div>
+      </div>
+
+      <h4>Ejemplos de preguntas de investigación</h4>
+      <ul>
+        <li>¿Existe correlación entre el precio y la calificación? ¿Se sostiene la creencia de que "lo caro es mejor"?</li>
+        <li>¿Qué categorías concentran las mejores y peores calificaciones? ¿La diferencia es significativa?</li>
+        <li>¿Los productos con mayor descuento reciben más reseñas (más ventas)?</li>
+      </ul>
+
+      <h4>Métricas de éxito propuestas</h4>
+      <ul>
+        <li>Validar o refutar, con evidencia estadística, la relación precio-calidad (correlación + prueba de hipótesis).</li>
+        <li>Un modelo que identifique los predictores del número de reseñas y su poder explicativo (R²).</li>
+        <li>Un informe visual que comunique tres hallazgos contraintuitivos con honestidad gráfica.</li>
+      </ul>
+
+      <h4>Cómo recorre las 7 semanas</h4>
+      <table class="cmp">
+        <tr><th>Reto técnico del proyecto</th><th>Semana</th></tr>
+        <tr><td>Precios como texto con símbolos, calificaciones corruptas, duplicados: limpieza intensa.</td><td>4</td></tr>
+        <tr><td>Correlación precio-rating, prueba t entre categorías, regresión del número de reseñas.</td><td>2 · 3</td></tr>
+        <tr><td>Dispersión, mapas de calor de correlación, barras comparativas por categoría.</td><td>5</td></tr>
+        <tr><td>El formato JSON anidado de las reseñas motiva un almacenamiento documental (MongoDB).</td><td>6 · 7</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROYECTO 4 ============ -->
+<section class="section section-alt" id="p4">
+  <div class="proyecto">
+    <div class="head">
+      <span class="num">4</span>
+      <span class="ti">Salud global y desarrollo humano<small>Fuente: Our World in Data · OMS · Banco Mundial</small>
+      <span class="nivel">Dominio: salud pública / investigación</span></span>
+    </div>
+    <div class="body">
+      <p>Los grandes organismos internacionales publican datos abiertos sobre la salud y el desarrollo de todos los países del mundo, a lo largo de décadas. Son datasets de investigación rigurosos, ideales para estudiar tendencias globales, desigualdades y relaciones entre factores de desarrollo.</p>
+
+      <h4>Fuentes de datos</h4>
+      <div class="card" style="margin-top:.5rem">
+        <div class="datoslink"><span class="tipo">Investigación</span><div><a href="https://ourworldindata.org/" target="_blank" rel="noopener">Our World in Data</a>: miles de datasets sobre salud, esperanza de vida, mortalidad, vacunación, por país y año, descargables en CSV.</div></div>
+        <div class="datoslink"><span class="tipo">Organismo</span><div><a href="https://www.who.int/data/gho" target="_blank" rel="noopener">OMS — Global Health Observatory</a>: indicadores oficiales de salud mundial con API y descargas.</div></div>
+        <div class="datoslink"><span class="tipo">Organismo</span><div><a href="https://datos.bancomundial.org/" target="_blank" rel="noopener">Banco Mundial — Datos Abiertos</a>: indicadores de desarrollo (PIB, educación, salud) de todos los países desde 1960.</div></div>
+      </div>
+
+      <div class="meta-proj">
+        <div class="box"><h5>Problema sugerido</h5><p>Analizar qué factores de desarrollo (ingreso, educación, gasto en salud) se asocian con la esperanza de vida, e identificar países que "rinden más" de lo que su riqueza predice.</p></div>
+        <div class="box"><h5>Variables clave</h5><ul><li>Esperanza de vida, mortalidad infantil</li><li>PIB per cápita, gasto en salud</li><li>Años de escolaridad</li><li>País, región, año</li></ul></div>
+      </div>
+
+      <h4>Ejemplos de preguntas de investigación</h4>
+      <ul>
+        <li>¿Qué tan fuerte es la relación entre el ingreso de un país y la esperanza de vida? ¿Es lineal o se aplana?</li>
+        <li>¿Qué países logran alta esperanza de vida con bajo ingreso, y qué podríamos aprender de ellos?</li>
+        <li>¿Cómo ha evolucionado la desigualdad en salud entre regiones en las últimas décadas?</li>
+      </ul>
+
+      <h4>Métricas de éxito propuestas</h4>
+      <ul>
+        <li>Un modelo de regresión que cuantifique el efecto del ingreso y el gasto en salud sobre la esperanza de vida.</li>
+        <li>Identificación justificada de países "sobre-desempeño" (residuos positivos del modelo).</li>
+        <li>Una visualización temporal que cuente la historia de la convergencia o divergencia en salud.</li>
+      </ul>
+
+      <h4>Cómo recorre las 7 semanas</h4>
+      <table class="cmp">
+        <tr><th>Reto técnico del proyecto</th><th>Semana</th></tr>
+        <tr><td>Combinar varios CSV por país y año; manejar años faltantes y países con datos incompletos.</td><td>4 · 6</td></tr>
+        <tr><td>Correlación ingreso-esperanza de vida; regresión múltiple; análisis de residuos.</td><td>2 · 3</td></tr>
+        <tr><td>Gráficos de dispersión con escala logarítmica, series temporales, comparativas regionales.</td><td>5</td></tr>
+        <tr><td>Pipeline que une y carga los indicadores a un almacén consultable por país/año.</td><td>6 · 7</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROYECTO 5 ============ -->
+<section class="section" id="p5">
+  <div class="proyecto">
+    <div class="head">
+      <span class="num">5</span>
+      <span class="ti">Clima y medio ambiente<small>Fuente: NOAA · NASA · Repositorios abiertos</small>
+      <span class="nivel">Dominio: ambiental / series temporales</span></span>
+    </div>
+    <div class="body">
+      <p>Los datos climáticos son de los más grandes y continuos que existen: registros horarios y diarios de miles de estaciones a lo largo de más de un siglo. Permiten estudiar tendencias de temperatura, patrones estacionales y el cambio climático con evidencia dura, además de ser un terreno idóneo para las series temporales.</p>
+
+      <h4>Fuentes de datos</h4>
+      <div class="card" style="margin-top:.5rem">
+        <div class="datoslink"><span class="tipo">Organismo</span><div><a href="https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily" target="_blank" rel="noopener">NOAA GHCN-Daily</a>: registros climáticos diarios de más de 100,000 estaciones en el mundo, descargables.</div></div>
+        <div class="datoslink"><span class="tipo">BigQuery</span><div><a href="https://console.cloud.google.com/marketplace/details/noaa-public/ghcn-d" target="_blank" rel="noopener">NOAA GHCN en BigQuery</a>: los mismos datos consultables con SQL a gran escala.</div></div>
+        <div class="datoslink"><span class="tipo">Alternativa</span><div><a href="https://www.kaggle.com/datasets/berkeleyearth/climate-change-earth-surface-temperature-data" target="_blank" rel="noopener">Berkeley Earth — Temperaturas</a> en Kaggle: temperaturas por ciudad y país desde 1750, en CSV manejable.</div></div>
+      </div>
+
+      <div class="meta-proj">
+        <div class="box"><h5>Problema sugerido</h5><p>Cuantificar la tendencia de calentamiento en una región o conjunto de ciudades, y caracterizar cómo han cambiado los patrones estacionales en las últimas décadas.</p></div>
+        <div class="box"><h5>Variables clave</h5><ul><li>Temperatura (máxima, mínima, media)</li><li>Precipitación</li><li>Fecha (día, mes, año)</li><li>Estación / ciudad / país</li></ul></div>
+      </div>
+
+      <h4>Ejemplos de preguntas de investigación</h4>
+      <ul>
+        <li>¿Hay una tendencia significativa de aumento de temperatura en la región elegida en las últimas décadas?</li>
+        <li>¿Los veranos son más calurosos o los inviernos menos fríos? ¿Qué estación cambia más?</li>
+        <li>¿Qué ciudades muestran el calentamiento más acelerado y cuáles son más estables?</li>
+      </ul>
+
+      <h4>Métricas de éxito propuestas</h4>
+      <ul>
+        <li>Una tendencia de temperatura con su pendiente (°C por década) y prueba de significancia estadística.</li>
+        <li>Visualización de series temporales que revele el patrón de forma inmediata y honesta.</li>
+        <li>Procesar décadas de datos diarios con un pipeline que maneje los enormes volúmenes.</li>
+      </ul>
+
+      <h4>Cómo recorre las 7 semanas</h4>
+      <table class="cmp">
+        <tr><th>Reto técnico del proyecto</th><th>Semana</th></tr>
+        <tr><td>Registros diarios con huecos, estaciones que abren y cierran, fechas en formatos variados.</td><td>4</td></tr>
+        <tr><td>Tendencia (regresión temporal), comparación entre décadas, estacionalidad.</td><td>2 · 3</td></tr>
+        <tr><td>Series temporales, descomposición estacional, mapas de anomalías.</td><td>5</td></tr>
+        <tr><td>Pipeline que agrega datos diarios a mensuales/anuales y los carga a un almacén de series temporales.</td><td>6 · 7</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt" id="comparativa">
+  <div class="eyebrow">Para decidir</div>
+  <h2 class="sec">Comparativa rápida de los cinco proyectos</h2>
+  <p class="lead">Usa esta tabla para que tu equipo elija según el dominio que les interese y el reto técnico que quieran asumir.</p>
+  <table class="cmp">
+    <tr><th>#</th><th>Proyecto</th><th>Fuente</th><th>Dominio</th><th>Reto distintivo</th><th>Volumen</th></tr>
+    <tr><td>1</td><td>Radiografía socioeconómica</td><td>INEGI</td><td>Social</td><td>Microdatos y recodificación</td><td>Alto</td></tr>
+    <tr><td>2</td><td>Movilidad urbana</td><td>Google BigQuery</td><td>Urbano / big data</td><td>Consulta SQL a gran escala</td><td>Muy alto</td></tr>
+    <tr><td>3</td><td>Voz del consumidor</td><td>Amazon Reviews</td><td>E-commerce / texto</td><td>Datos semiestructurados / NoSQL</td><td>Muy alto</td></tr>
+    <tr><td>4</td><td>Salud global</td><td>OWID / OMS / BM</td><td>Salud pública</td><td>Unir múltiples fuentes</td><td>Medio-alto</td></tr>
+    <tr><td>5</td><td>Clima y medio ambiente</td><td>NOAA / NASA</td><td>Ambiental</td><td>Series temporales masivas</td><td>Muy alto</td></tr>
+  </table>
+</section>
+<section class="section" id="equipos">
+  <div class="eyebrow">Organización</div>
+  <h2 class="sec">Formación de los cinco equipos</h2>
+  <p class="lead">El grupo se organiza en cinco equipos. Cada equipo asume uno de los cinco proyectos; no se repiten, de modo que el grupo cubre en conjunto los cinco dominios y puede compararlos en las presentaciones finales.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h4>Criterios de integración</h4>
+      <ul>
+        <li>Equipos de tamaño equilibrado (según el total del grupo).</li>
+        <li>Procuren diversidad de fortalezas: alguien cómodo con estadística, alguien con programación, alguien con comunicación visual.</li>
+        <li>Definan roles: coordinación, ingeniería de datos (pipeline), análisis estadístico y visualización/comunicación. Los roles pueden rotar, pero deben existir.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Actividad de arranque (en clase)</h4>
+      <p>Cada equipo, una vez formado, debe <b>definir cuatro elementos</b> antes de salir de la sesión:</p>
+      <ol class="pasos">
+        <li>El <b>problema</b>: la pregunta de investigación concreta que resolverán.</li>
+        <li>El <b>dataset</b>: la fuente exacta, con su enlace, ya descargada y abierta.</li>
+        <li>Los <b>objetivos</b>: qué buscan lograr (general y específicos).</li>
+        <li>Las <b>métricas de éxito</b>: cómo sabrán si el proyecto cumplió su objetivo.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="card reflex">
+    <h3>Asistente para definir tu proyecto</h3>
+    <p>Usa este planificador en clase para estructurar la decisión de tu equipo. Se guarda en este navegador; luego trasládalo al protocolo.</p>
+    <label>Proyecto elegido</label>
+    <select id="f-proyecto">
+      <option value="">Selecciona...</option>
+      <option>1 — Radiografía socioeconómica (INEGI)</option>
+      <option>2 — Movilidad urbana (Google BigQuery)</option>
+      <option>3 — Voz del consumidor (Amazon Reviews)</option>
+      <option>4 — Salud global (OWID / OMS / Banco Mundial)</option>
+      <option>5 — Clima y medio ambiente (NOAA / NASA)</option>
+    </select>
+    <label>Nuestra pregunta de investigación (el problema, en una frase)</label>
+    <textarea id="f-problema" placeholder="Ejemplo: ¿Existe una brecha salarial de género entre personas con el mismo nivel educativo en México, y cómo varía por entidad?"></textarea>
+    <label>Objetivo general</label>
+    <textarea id="f-objetivo" placeholder="Qué busca lograr el proyecto en conjunto."></textarea>
+    <label>Métrica de éxito principal (cómo sabremos si lo logramos)</label>
+    <textarea id="f-metrica" placeholder="Ejemplo: cuantificar la brecha salarial en %, con intervalo de confianza, controlando por escolaridad."></textarea>
+    <label>Enlace del dataset que ya descargamos y abrimos</label>
+    <input id="f-dataset" type="text" placeholder="https://...">
+    <button class="btn ghost" onclick="guardarPlan()">Guardar en este dispositivo</button>
+    <div id="plan-msg" style="margin-top:.8rem;font-family:'JetBrains Mono',monospace;font-size:.85rem;color:#a9e5c0"></div>
+  </div>
+</section>
+
+<section class="section section-alt" id="protocolo">
+  <div class="eyebrow">Tarea · Primer entregable</div>
+  <h2 class="sec">Protocolo del proyecto (1-2 páginas)</h2>
+  <p class="lead">El protocolo es el contrato de tu proyecto: documenta qué harán, con qué datos y cómo medirán el éxito. Se entrega junto con el dataset seleccionado y validado. Debe caber en una o dos páginas; la brevedad obliga a la claridad.</p>
+
+  <div class="card">
+    <h4>Estructura del protocolo</h4>
+    <ol class="pasos">
+      <li><b>Portada:</b> nombre del proyecto, integrantes y roles, fecha, materia y plantel.</li>
+      <li><b>Problema y justificación:</b> la pregunta de investigación y por qué vale la pena responderla (3-5 líneas).</li>
+      <li><b>Dataset:</b> fuente exacta, enlace, número aproximado de registros y variables, y una línea sobre su estado (qué limpieza requiere). Debe estar <b>ya descargado y abierto</b>.</li>
+      <li><b>Objetivos:</b> uno general y dos o tres específicos, redactados con verbos medibles.</li>
+      <li><b>Métricas de éxito:</b> cómo sabrán si el proyecto cumplió (al menos dos métricas concretas).</li>
+      <li><b>Plan por fases KDD:</b> una línea por cada fase (selección, limpieza, transformación, análisis, interpretación) indicando qué harán.</li>
+      <li><b>Evidencia de validación del dataset:</b> una captura o descripción que demuestre que abrieron el archivo y confirmaron su contenido.</li>
+    </ol>
+  </div>
+
+  <div class="callout ok">
+    <b>Plantilla descargable.</b> Junto a esta guía se incluye una plantilla de protocolo en formato Word (<code>Plantilla_Protocolo_Proyecto.docx</code>) con todas las secciones listas para rellenar. Entréguenla completada en Google Classroom junto con el enlace o la muestra del dataset validado.
+  </div>
+
+  <h3>Ejemplo de cómo redactar una métrica de éxito</h3>
+  <div class="grid2">
+    <div class="card" style="border-left:4px solid var(--rojo)">
+      <h4 style="color:var(--rojo-700)">Métrica débil</h4>
+      <p>"Vamos a analizar los datos y hacer gráficas bonitas."</p>
+      <p style="font-size:.85rem;color:var(--tinta-suave)">No es medible: ¿cómo se sabe si se logró?</p>
+    </div>
+    <div class="card" style="border-left:4px solid var(--ok)">
+      <h4 style="color:var(--ok)">Métrica sólida</h4>
+      <p>"Determinar con una prueba de hipótesis (α = 0.05) si la brecha salarial de género es significativa, y estimarla en porcentaje con su intervalo de confianza del 95%."</p>
+      <p style="font-size:.85rem;color:var(--tinta-suave)">Es concreta, medible y defendible.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="rubrica">
+  <div class="eyebrow">Evaluación</div>
+  <h2 class="sec">Rúbrica del protocolo</h2>
+  <p class="lead">Así se evalúa este primer entregable. El protocolo vale como la planeación del proyecto integrador completo.</p>
+  <table class="cmp">
+    <tr><th>Criterio</th><th>Qué se evalúa</th><th>Puntos</th></tr>
+    <tr><td>Problema bien definido</td><td>Pregunta de investigación clara, concreta y respondible con los datos.</td><td>20</td></tr>
+    <tr><td>Dataset validado</td><td>Fuente real y masiva, ya descargada y abierta, con evidencia de validación.</td><td>25</td></tr>
+    <tr><td>Objetivos y métricas</td><td>Objetivos medibles y al menos dos métricas de éxito concretas.</td><td>25</td></tr>
+    <tr><td>Plan por fases KDD</td><td>Coherencia entre el problema, el dataset y el recorrido por las siete semanas.</td><td>20</td></tr>
+    <tr><td>Redacción y formato</td><td>Protocolo de 1-2 páginas, claro, formal y bien organizado.</td><td>10</td></tr>
+    <tr><td><b>Total</b></td><td></td><td><b>100</b></td></tr>
+  </table>
+
+  <div class="callout rojo">
+    <b>Causa de no aprobación.</b> Un protocolo cuyo dataset no haya sido abierto y validado por el equipo, o cuyas métricas de éxito no sean medibles, se devuelve para corrección. La validación del dataset no es un trámite: es lo que separa un proyecto viable de uno que fracasará en la segunda semana.
+  </div>
+
+  <div class="card reflex">
+    <h3>Reflexión final del equipo</h3>
+    <p>Antes de entregar, respondan juntos. Se guarda en este navegador.</p>
+    <label>1. ¿Por qué este problema le importa a alguien más allá de la calificación? ¿Quién usaría sus hallazgos?</label>
+    <textarea placeholder="Escriban su respuesta..."></textarea>
+    <label>2. ¿Cuál será el mayor reto técnico de su proyecto y en qué semana del curso aprendieron a enfrentarlo?</label>
+    <textarea placeholder="Escriban su respuesta..."></textarea>
+    <label>3. ¿Cómo se repartirán el trabajo para que todos los integrantes practiquen las siete competencias?</label>
+    <textarea placeholder="Escriban su respuesta..."></textarea>
+    <button class="btn ghost" onclick="guardarReflexion()">Guardar reflexión</button>
+    <div id="reflex-msg" style="margin-top:.8rem;font-family:'JetBrains Mono',monospace;font-size:.85rem;color:#a9e5c0"></div>
+  </div>
+</section>
+
+<footer>
+  <img src="data:image/png;base64,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flrOlIvlVxIvfT/Q8L9DbpR4efnHco7Ep/GPlUNkb4lXDDaQZl8+J4T0O67/Z2eLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAADaYosAAKAttggAANpiiwAAoC22CAAA2mKLAACgLbYIAABacu8//T+wJF0i54bpgwAAAABJRU5ErkJggg==" alt="UNE">
+  <p><strong>Universidad de Especialidades UNE · Plantel Centro</strong></p>
+  <p>Optativa III: Ciencia de Datos · Ingeniería en Computación · 9.º semestre</p>
+  <p style="margin-top:.8rem;opacity:.8">Proyecto integrador de las Semanas 1 a 7, diseñado con metodología constructivista, pedagogía activa y aprendizaje basado en problemas. Material educativo para uso académico. El protocolo y el dataset validado se entregan en Google Classroom.</p>
+</footer>
+</main>
+</div>
+<button class="top" id="topbtn" aria-label="Volver arriba" onclick="window.scrollTo({top:0})">↑</button>
+
+<script>
+function guardarPlan(){
+  var data={
+    proyecto:document.getElementById('f-proyecto').value,
+    problema:document.getElementById('f-problema').value,
+    objetivo:document.getElementById('f-objetivo').value,
+    metrica:document.getElementById('f-metrica').value,
+    dataset:document.getElementById('f-dataset').value
+  };
+  try{ localStorage.setItem('pi_plan',JSON.stringify(data));
+    document.getElementById('plan-msg').textContent='Plan guardado en este navegador. Trasládenlo al protocolo.';
+  }catch(e){ document.getElementById('plan-msg').textContent='No se pudo guardar. Copien el texto manualmente.'; }
+}
+function guardarReflexion(){
+  var areas=document.querySelectorAll('#rubrica .reflex textarea');
+  var data=[];
+  areas.forEach(function(a){data.push(a.value);});
+  try{ localStorage.setItem('pi_reflexion',JSON.stringify(data));
+    document.getElementById('reflex-msg').textContent='Reflexion guardada en este navegador.';
+  }catch(e){ document.getElementById('reflex-msg').textContent='No se pudo guardar. Copien el texto manualmente.'; }
+}
+window.addEventListener('load',function(){
+  try{
+    var p=localStorage.getItem('pi_plan');
+    if(p){var d=JSON.parse(p);
+      if(d.proyecto)document.getElementById('f-proyecto').value=d.proyecto;
+      if(d.problema)document.getElementById('f-problema').value=d.problema;
+      if(d.objetivo)document.getElementById('f-objetivo').value=d.objetivo;
+      if(d.metrica)document.getElementById('f-metrica').value=d.metrica;
+      if(d.dataset)document.getElementById('f-dataset').value=d.dataset;
+    }
+    var r=localStorage.getItem('pi_reflexion');
+    if(r){var dr=JSON.parse(r);var areas=document.querySelectorAll('#rubrica .reflex textarea');
+      areas.forEach(function(a,i){if(dr[i])a.value=dr[i];});}
+  }catch(e){}
+});
+var secciones=[].slice.call(document.querySelectorAll('main section[id]'));
+var enlaces=[].slice.call(document.querySelectorAll('#toc a'));
+var topbtn=document.getElementById('topbtn');
+function onScroll(){
+  var actual='';
+  secciones.forEach(function(s){ if(window.scrollY>=s.offsetTop-120) actual=s.id; });
+  enlaces.forEach(function(a){ a.classList.toggle('on', a.getAttribute('href')==='#'+actual); });
+  topbtn.classList.toggle('show', window.scrollY>500);
+}
+window.addEventListener('scroll',onScroll); onScroll();
+enlaces.forEach(function(a){a.addEventListener('click',function(){document.querySelector('.side').classList.remove('open');});});
+</script>
+</body>
+</html>
